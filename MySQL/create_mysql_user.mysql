@@ -1,0 +1,5 @@
+-- The statements below should be run by MySQL user `root`
+
+CREATE USER sns_admin@localhost IDENTIFIED BY 'CalRybMid3';
+
+GRANT ALL ON `t_sns`.* TO `sns_admin`@`localhost`;
