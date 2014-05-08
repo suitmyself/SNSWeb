@@ -17,8 +17,8 @@
 	String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	String DB_URL = "jdbc:mysql://localhost/t_sns";
 	//  Database credentials
-	String USER = "root";
-	String PASS = "wei13755030514";   //此部分请注意修改密码
+	String USER = "sns_admin";
+	String PASS = "CalRybMid3";   //此部分请注意修改密码
 	Connection conn = null;
 	Statement stmt = null;
 	try
