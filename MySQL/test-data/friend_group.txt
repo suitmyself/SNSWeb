@@ -1,0 +1,7 @@
+daniel,盟友
+daniel,潜在敌人
+daniel,特别关注
+hitler,帝国元帅
+hitler,疯子
+hitler,忠臣
+hitler,疑似内奸

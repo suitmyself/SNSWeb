@@ -1,0 +1,7 @@
+daniel,programming
+daniel,astronomy
+daniel,singing
+hitler,war
+hitler,peace
+hitler,animal welfare
+hitler,health care
