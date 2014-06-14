@@ -37,7 +37,7 @@
 	</style>
 </head>
 <body>
-  	<%@ include file="navigator.jsp" %>
+    <%@ include file="navigator.jsp" %>
   	<%@ include file="module.jsp" %>
   	<div class=flightBooked></div>
 </body>

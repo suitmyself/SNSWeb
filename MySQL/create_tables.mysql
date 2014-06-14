@@ -1,4 +1,4 @@
-/*DROP DATABASE t_sns;*/
+DROP DATABASE t_sns;
 CREATE DATABASE t_sns;
 USE t_sns;
 
