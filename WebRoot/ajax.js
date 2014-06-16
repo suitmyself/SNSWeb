@@ -1,21 +1,21 @@
-//¶¨ÒåXMLHttpRequest¶ÔÏóÊµÀı
+//å®šä¹‰XMLHttpRequestå¯¹è±¡å®ä¾‹
 var http_request = false;
 
-//¶¨Òå¿É¸´ÓÃµÄhttpÇëÇó·¢ËÍº¯Êı
+//å®šä¹‰å¯å¤ç”¨çš„httpè¯·æ±‚å‘é€å‡½æ•°
 function send_request(method,url,content,responseType,callback) 
-{   //³õÊ¼»¯¡¢Ö¸¶¨´¦Àíº¯Êı¡¢·¢ËÍÇëÇóµÄº¯Êı
+{   //åˆå§‹åŒ–ã€æŒ‡å®šå¤„ç†å‡½æ•°ã€å‘é€è¯·æ±‚çš„å‡½æ•°
     http_request = false;
-    //¿ªÊ¼³õÊ¼»¯XMLHttpRequest¶ÔÏó
+    //å¼€å§‹åˆå§‹åŒ–XMLHttpRequestå¯¹è±¡
     if(window.XMLHttpRequest) 
-    {   //Mozilla ä¯ÀÀÆ÷
+    {   //Mozilla æµè§ˆå™¨
         http_request = new XMLHttpRequest();
         if (http_request.overrideMimeType) 
-        {    //ÉèÖÃMiMEÀà±ğ
+        {    //è®¾ç½®MiMEç±»åˆ«
             http_request.overrideMimeType("text/xml");
         }
     }
     else if (window.ActiveXObject) 
-    	{ // IEä¯ÀÀÆ÷
+    	{ // IEæµè§ˆå™¨
         try 
         {
             http_request = new ActiveXObject("Msxml2.XMLHTTP");
@@ -28,26 +28,26 @@ function send_request(method,url,content,responseType,callback)
             } catch (e) {}
         }
       }
-    if (!http_request) { // Òì³££¬´´½¨¶ÔÏóÊµÀıÊ§°Ü
-        window.alert("²»ÄÜ´´½¨XMLHttpRequest¶ÔÏóÊµÀı.");
+    if (!http_request) { // å¼‚å¸¸ï¼Œåˆ›å»ºå¯¹è±¡å®ä¾‹å¤±è´¥
+        window.alert("ä¸èƒ½åˆ›å»ºXMLHttpRequestå¯¹è±¡å®ä¾‹.");
         return false;
     }
     if(responseType.toLowerCase()=="text") 
     {
-        //http_request.onreadystatechange = processTextResponse;  //ÕâÁ½¸öµØ·½ĞèÒª×¢Òâ
+        //http_request.onreadystatechange = processTextResponse;  //è¿™ä¸¤ä¸ªåœ°æ–¹éœ€è¦æ³¨æ„
         http_request.onreadystatechange = callback;
     }
     else if(responseType.toLowerCase()=="xml") 
     {
-        //http_request.onreadystatechange = processXMLResponse;  //ÕâÁ½¸öµØ·½ĞèÒª×¢Òâ
+        //http_request.onreadystatechange = processXMLResponse;  //è¿™ä¸¤ä¸ªåœ°æ–¹éœ€è¦æ³¨æ„
         http_request.onreadystatechange = callback;
     }
     else
     {
-        window.alert("ÏìÓ¦Àà±ğ²ÎÊı´íÎó¡£");
+        window.alert("å“åº”ç±»åˆ«å‚æ•°é”™è¯¯ã€‚");
         return false;
     }
-    // È·¶¨·¢ËÍÇëÇóµÄ·½Ê½ºÍURLÒÔ¼°ÊÇ·ñÒì²½Ö´ĞĞÏÂ¶Î´úÂë
+    // ç¡®å®šå‘é€è¯·æ±‚çš„æ–¹å¼å’ŒURLä»¥åŠæ˜¯å¦å¼‚æ­¥æ‰§è¡Œä¸‹æ®µä»£ç 
     if(method.toLowerCase()=="get") 
     {
         http_request.open(method, url, true);
@@ -59,44 +59,44 @@ function send_request(method,url,content,responseType,callback)
     }
     else 
     {
-        window.alert("httpÇëÇóÀà±ğ²ÎÊı´íÎó¡£");
+        window.alert("httpè¯·æ±‚ç±»åˆ«å‚æ•°é”™è¯¯ã€‚");
         return false;
     }
-    http_request.send(content);//contentÊÇº¯Êı²ÎÊı
+    http_request.send(content);//contentæ˜¯å‡½æ•°å‚æ•°
 }
 
 
-// ´¦Àí·µ»ØÎÄ±¾¸ñÊ½ĞÅÏ¢µÄº¯Êı
+// å¤„ç†è¿”å›æ–‡æœ¬æ ¼å¼ä¿¡æ¯çš„å‡½æ•°
 function processTextResponse() 
 {
-    if (http_request.readyState == 4) { // ÅĞ¶Ï¶ÔÏó×´Ì¬
+    if (http_request.readyState == 4) { // åˆ¤æ–­å¯¹è±¡çŠ¶æ€
         if (http_request.status == 200) 
-        {   // ĞÅÏ¢ÒÑ¾­³É¹¦·µ»Ø£¬¿ªÊ¼´¦ÀíĞÅÏ¢
+        {   // ä¿¡æ¯å·²ç»æˆåŠŸè¿”å›ï¼Œå¼€å§‹å¤„ç†ä¿¡æ¯
             //alert(http_request.responseText);
-            alert("TextÎÄµµÏìÓ¦¡£");
-        }//Õâ¸öº¯Êı»áµ÷ÓÃ5´Î£¬Ã»±ØÒªelse
+            alert("Textæ–‡æ¡£å“åº”ã€‚");
+        }//è¿™ä¸ªå‡½æ•°ä¼šè°ƒç”¨5æ¬¡ï¼Œæ²¡å¿…è¦else
         /* 
         else 
-        {   //Ò³Ãæ²»Õı³£
-            alert("ÄúËùÇëÇóµÄÒ³ÃæÓĞÒì³£¡£");
+        {   //é¡µé¢ä¸æ­£å¸¸
+            alert("æ‚¨æ‰€è¯·æ±‚çš„é¡µé¢æœ‰å¼‚å¸¸ã€‚");
         }
         */
     }
 }
 
-//´¦Àí·µ»ØµÄXML¸ñÊ½ÎÄµµµÄº¯Êı
+//å¤„ç†è¿”å›çš„XMLæ ¼å¼æ–‡æ¡£çš„å‡½æ•°
 function processXMLResponse()
 {
     if (http_request.readyState == 4) 
-    { // ÅĞ¶Ï¶ÔÏó×´Ì¬
+    { // åˆ¤æ–­å¯¹è±¡çŠ¶æ€
         if (http_request.status == 200) 
-        { // ĞÅÏ¢ÒÑ¾­³É¹¦·µ»Ø£¬¿ªÊ¼´¦ÀíĞÅÏ¢
+        { // ä¿¡æ¯å·²ç»æˆåŠŸè¿”å›ï¼Œå¼€å§‹å¤„ç†ä¿¡æ¯
             //alert(http_request.responseXML);
-            alert("XMLÎÄµµÏìÓ¦¡£");
+            alert("XMLæ–‡æ¡£å“åº”ã€‚");
         }
         else 
-        { //Ò³Ãæ²»Õı³£
-            alert("ÄúËùÇëÇóµÄÒ³ÃæÓĞÒì³£¡£");
+        { //é¡µé¢ä¸æ­£å¸¸
+            alert("æ‚¨æ‰€è¯·æ±‚çš„é¡µé¢æœ‰å¼‚å¸¸ã€‚");
         }
     }
 }
