@@ -108,16 +108,16 @@ CREATE TABLE notice_friend_request (
 
 CREATE TABLE post (
     post_id int AUTO_INCREMENT,
-    replyto_id int,
+    re_id int,	/* not -1: post_id of the post replied; -1: this is a post, NOT a reply */
     username varchar(64),
     ts timestamp DEFAULT CURRENT_TIMESTAMP,
     content text,
 
     PRIMARY KEY (post_id),
 --    FOREIGN KEY (username) REFERENCES account (username),
-    FOREIGN KEY (replyto_id) REFERENCES post (post_id),
+--    FOREIGN KEY (re_id) REFERENCES post (post_id),
 
-    CHECK (
-        EXISTS (SELECT * FROM account AS ac WHERE ac.username = username)
-    )
+	CHECK (
+		EXISTS ( SELECT username FROM account AS ac WHERE ac.username = username )
+	)
 );
