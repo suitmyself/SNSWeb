@@ -28,23 +28,28 @@ CREATE TABLE user_info (
     FOREIGN KEY (username) REFERENCES account (username) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8;
 
+/*
 CREATE TABLE user_info_visibility (
     username varchar(64),
-    attribute varchar(64),                  /* FIXME: how to convert column name to string in MySQL? */
-    visible tinyint(1) DEFAULT NULL,            /* NULL: open to all, 0: open to friends, 1: private */
+    attribute varchar(64),                  -- FIXME: how to convert column name to string in MySQL?
+    visible tinyint(1) DEFAULT NULL,            -- NULL: open to all, 0: open to friends, 1: private 
 
     PRIMARY KEY (username, attribute),
     FOREIGN KEY (username) REFERENCES account (username) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8;
+*/
 
+/*
 CREATE TABLE friend_group (
     username varchar(64),
-    group_name varchar(64),      /* Any user should have at least one friend group named "default" */
+    group_name varchar(64),      -- Any user should have at least one friend group named "default"
 
     PRIMARY KEY (username, group_name),
     FOREIGN KEY (username) REFERENCES account (username) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8;
+*/
 
+/*
 CREATE TABLE interest_label (
     username varchar(64),
     interest varchar(64),
@@ -52,26 +57,30 @@ CREATE TABLE interest_label (
     PRIMARY KEY (username, interest),
     FOREIGN KEY (username) REFERENCES account (username) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8;
+*/
 
 CREATE TABLE friend_pair (
+	-- NOTE username2 is a friend of username1
     username1 varchar(64),
-    group_name1 varchar(64),
+    -- group_name1 varchar(64),
     username2 varchar(64),
-    group_name2 varchar(64),
+    -- group_name2 varchar(64),
 
-    PRIMARY KEY (username1, username2),
+    PRIMARY KEY (username1, username2)
 --    FOREIGN KEY (username1) REFERENCES account (username),
 --    FOREIGN KEY (username2) REFERENCES account (username),
 --    FOREIGN KEY (group_name1) REFERENCES friend_group (group_name),   /* FIXME: Why failed? */
 --    FOREIGN KEY (group_name2) REFERENCES friend_group (group_name),
 
+	/*
     CHECK (
-        username1 < username2    /* to avoid replication: friend(A, B) = friend(B, A) */
+        -- username1 < username2    -- to avoid replication: friend(A, B) = friend(B, A)
         AND EXISTS (SELECT * FROM friend_group AS fg
             WHERE fg.username = username1 AND fg.group_name = group_name2)
         AND EXISTS (SELECT * FROM friend_group AS fg
             WHERE fg.username = username2 AND fg.group_name = group_name1)
     )
+	*/
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE add_friend_request (
@@ -79,48 +88,52 @@ CREATE TABLE add_friend_request (
     ts timestamp DEFAULT CURRENT_TIMESTAMP,
     from_username varchar(64),
     to_username varchar(64),
-    group_name varchar(64),         /* Which of from_username's friend groups to place to_username. */
+    -- group_name varchar(64),         /* Which of from_username's friend groups to place to_username. */
     message text,
     status tinyint(1),      /* NULL: unhandled, 0: accepted, 1: rejected */
 
-    PRIMARY KEY (request_id),
+    PRIMARY KEY (request_id)
 --    FOREIGN KEY (from_username) REFERENCES account (username),
 --    FOREIGN KEY (to_username) REFERENCES account (username) ON DELETE CASCADE, /* fixme */
 --    FOREIGN KEY (group_name) REFERENCES friend_group (group_name),
 
+	/*
     CHECK (
         EXISTS (SELECT * FROM friend_group AS fg
             WHERE fg.username = from_username AND fg.group_name = group_name)
         AND EXISTS (SELECT * FROM account AS ac WHERE ac.username = to_username)
     )
-);
+	*/
+) DEFAULT CHARSET=utf8;
 
+/*
 CREATE TABLE notice_friend_request (
     notice_id int AUTO_INCREMENT,
     ts timestamp DEFAULT CURRENT_TIMESTAMP,
-    status tinyint(1),          /* 0: read, 1: unread */
+    status tinyint(1),          -- 0: read, 1: unread
     content text,
     request_id int,
 
     PRIMARY KEY (notice_id),
     FOREIGN KEY (request_id) REFERENCES add_friend_request (request_id) ON DELETE CASCADE
-);
+) DEFAULT CHARSET=utf8;
+*/
 
 CREATE TABLE post (
     post_id int AUTO_INCREMENT,
-    replyto_id int,
+    re_id int,
     username varchar(64),
     ts timestamp DEFAULT CURRENT_TIMESTAMP,
     content text,
 
     PRIMARY KEY (post_id),
 --    FOREIGN KEY (username) REFERENCES account (username),
-    FOREIGN KEY (replyto_id) REFERENCES post (post_id),
+    -- FOREIGN KEY (re_id) REFERENCES post (post_id),
 
     CHECK (
         EXISTS (SELECT * FROM account AS ac WHERE ac.username = username)
     )
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE system_message (
     notice_id int AUTO_INCREMENT,
@@ -129,6 +142,6 @@ CREATE TABLE system_message (
     content text,
     to_username varchar(64),
 
-    PRIMARY KEY (notice_id),
-    FOREIGN KEY (to_username) REFERENCES account (username) ON DELETE CASCADE
-);
+    PRIMARY KEY (notice_id)
+--    FOREIGN KEY (to_username) REFERENCES account (username) ON DELETE CASCADE
+) DEFAULT CHARSET=utf8;

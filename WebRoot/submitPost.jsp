@@ -16,10 +16,12 @@ if (request.getParameter("words") != null) {
 	try {
 	String sql = "INSERT INTO  `t_sns`.`post` (re_id, username, content)"
 		+ " VALUES (-1,'" + userID + "','" + content + "')";
+	System.out.println(sql);
 	stmt.execute(sql);
 
 	conn.close();
 	stmt.close();
+	} finally {
 	}
 
 }

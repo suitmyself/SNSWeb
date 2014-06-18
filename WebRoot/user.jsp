@@ -1,18 +1,20 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.sql.*" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%
-	if (session.isNew() || session.getAttribute("userID") == null)
+	String userID = (String) session.getAttribute("userID");
+	if (session.isNew() || userID == null)
 	{
 		response.sendRedirect("login.jsp");
-		System.out.println("转向到登录页面");
+		//System.out.println("转向到登录页面");
 		return;
 	}
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html>s
   <head>
     <base href="<%=basePath%>">
     <title>用户界面</title>
@@ -119,6 +121,44 @@
 		<textarea type="text" id="myPost"  rows=4 cols=15></textarea>
 		<input style="height: 20; width:50" type="button" value="发布" onclick="submitPost()"/>
 	</div>
+	<%@ include file="accessDB.jsp" %>
+	<%
+	try {
+		String sql = "SELECT * FROM `t_sns`.`post` WHERE username='" + userID	+ "'"
+			+ " OR username IN (SELECT username2 FROM friend_pair WHERE username1='" + userID + "')"
+			+ " ORDER BY ts DESC";
+		out.println(sql);
+		ResultSet rs = stmt.executeQuery(sql);
+	}
+	catch(SQLException se) {
+		//Handle errors for JDBC
+		out.println("<p>sorry,数据库错误</P>");
+		se.printStackTrace();
+	}
+	catch(Exception e) {
+		//Handle errors for Class.forName
+		out.println("<p>sorry,数据库错误</P>");
+		e.printStackTrace();
+	}
+	finally {
+		//finally block used to close resources
+		try {
+			if(stmt!=null) stmt.close();
+		}
+		catch(SQLException se2)
+		{
+			out.println("<p>sorry,数据库错误</P>");
+		}// nothing we can do
+		try {
+			 if(conn!=null) conn.close();
+		}
+		catch(SQLException se) {
+			out.println("<p>sorry,数据库错误</P>");
+			se.printStackTrace();
+		}
+	}
+	%>
+	
 	<div class="postBoard">
 		<div class="postItem" id="1">
 			Hi, my firt post!
