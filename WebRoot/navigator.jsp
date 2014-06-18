@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!-- 此文件不单独存在，作为导航栏存在各个栏中 -->
 <% if (session.isNew()||session.getAttribute("userID")==null)
 {

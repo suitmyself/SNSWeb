@@ -78,7 +78,7 @@ function check()
 		</div>
 		<div>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="登录" name="submit" class="submit" > &nbsp;&nbsp;&nbsp;&nbsp;<a class="register" href="register.jsp">注册</a> 
-	   </div>
+	    </div>
 			
 		</form>
 	</center>

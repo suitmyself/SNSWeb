@@ -60,6 +60,11 @@
 			System.out.println(sql);
 			Statement stmt2 = conn.createStatement();
 			stmt2.executeUpdate(sql);
+			sql="insert into user_info values('"+username+"',"+"null"+",'1',"+
+											 "null,"+"null,"+"null,"+"null,"+"null,"+
+											 "null,"+"null,"+"null"+")";
+			Statement stmt3 = conn.createStatement();
+			stmt3.executeUpdate(sql);
 
 			out.println("<h2>检测到用户名未被注册</h2>");
 			out.println("<h2>注册成功</h2>");

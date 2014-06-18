@@ -1,4 +1,4 @@
-  <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+  <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<style type="text/css">
@@ -49,11 +49,11 @@
   <div class="functionBlock">
   	<span style="color:white">功能模块</span>
  	 <ul>
- 	 	<li> <a href="#">链接一</a>
-  	 	<li> <a href="#">链接二</a>
-  	 	<li> <a href="#">链接三</a>
-  	 	<li> <a href="#">链接四</a>
-  	 	<li> <a href="#">链接五</a>
+ 	 	<li> <a href="changePassword.jsp">修改密码</a>
+  	 	<li> <a href="personInformation.jsp">个人信息</a>
+  	 	<li> <a href="addFriend.jsp">添加好友</a>
+  	 	<li> <a href="friendManager.jsp">好友管理</a>
+  	 	<li> <a href="systemMessage.jsp">系统消息</a>
   	 	<li> <a href="#">链接六</a>
   	 </ul>
   </div>
