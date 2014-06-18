@@ -14,7 +14,7 @@
 	}
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>s
+<html>
   <head>
     <base href="<%=basePath%>">
     <title>用户界面</title>
@@ -127,8 +127,21 @@
 		String sql = "SELECT * FROM `t_sns`.`post` WHERE username='" + userID	+ "'"
 			+ " OR username IN (SELECT username2 FROM friend_pair WHERE username1='" + userID + "')"
 			+ " ORDER BY ts DESC";
-		out.println(sql);
+		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
+	%>
+	
+		<div class="postBoard">
+			<% for ( ; rs.next(); ) { %>
+			<div class="postItem" id=<%= rs.getString("post_id") %> >
+				<p><%= rs.getString("username") %> 说：</p>
+				<p><%= rs.getString("content") %></p>
+				<p><%= rs.getString("ts") %></p>
+			</div>
+			<% } %>
+		</div>
+
+	<%
 	}
 	catch(SQLException se) {
 		//Handle errors for JDBC
@@ -158,14 +171,5 @@
 		}
 	}
 	%>
-	
-	<div class="postBoard">
-		<div class="postItem" id="1">
-			Hi, my firt post!
-		</div>
-		<div class="postItem" id="2">
-			Hi, my second post!
-		</div>
-	</div>
 </body>
 </html>
