@@ -108,16 +108,27 @@ CREATE TABLE notice_friend_request (
 
 CREATE TABLE post (
     post_id int AUTO_INCREMENT,
-    re_id int,	/* not -1: post_id of the post replied; -1: this is a post, NOT a reply */
+    replyto_id int,
     username varchar(64),
     ts timestamp DEFAULT CURRENT_TIMESTAMP,
     content text,
 
     PRIMARY KEY (post_id),
 --    FOREIGN KEY (username) REFERENCES account (username),
---    FOREIGN KEY (re_id) REFERENCES post (post_id),
+    FOREIGN KEY (replyto_id) REFERENCES post (post_id),
 
-	CHECK (
-		EXISTS ( SELECT username FROM account AS ac WHERE ac.username = username )
-	)
+    CHECK (
+        EXISTS (SELECT * FROM account AS ac WHERE ac.username = username)
+    )
+);
+
+CREATE TABLE system_message (
+    notice_id int AUTO_INCREMENT,
+    ts timestamp DEFAULT CURRENT_TIMESTAMP,
+    status tinyint(1),          /* 0: read, 1: unread */
+    content text,
+    to_username varchar(64),
+
+    PRIMARY KEY (notice_id),
+    FOREIGN KEY (to_username) REFERENCES account (username) ON DELETE CASCADE
 );
