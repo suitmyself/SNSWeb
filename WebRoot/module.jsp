@@ -1,5 +1,10 @@
-  <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-  <head>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%
+	response.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
+%>
+
+<head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<style type="text/css">
  	 .functionBlock

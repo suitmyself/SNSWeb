@@ -1,6 +1,9 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.sql.*" %>
 <%
+	response.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
+
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -137,6 +140,8 @@
 				<p><%= rs.getString("username") %> 说：</p>
 				<p><%= rs.getString("content") %></p>
 				<p><%= rs.getString("ts") %></p>
+				<button onClick="submitReply(<%= rs.getString("post_id") %>)">回复</button>
+				
 			</div>
 			<% } %>
 		</div>
