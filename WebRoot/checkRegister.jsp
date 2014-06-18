@@ -20,25 +20,9 @@
 <body onload="timeCount()">
 <center>
 <h1>检验注册页面</h1>
-<% 
-	String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	String DB_URL = "jdbc:mysql://localhost:3306/t_sns";
-	//  Database credentials
-	String USER = "sns_admin";
-	String PASS = "CalRybMid3" ;
-	Connection conn = null;
-	Statement stmt = null;
-	try
-	{
-		//STEP 2: Register JDBC driver
-	 	Class.forName("com.mysql.jdbc.Driver");	   
-		//STEP 3: Open a connection
-		System.out.println("Connecting to database...");
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-		//STEP 4: Execute a query
-		System.out.println("Creating statement...");
-		stmt = conn.createStatement();
+<%@ include file="accessDB.jsp" %>
+<% 
 		String sql;
 		sql = "SELECT * FROM account where username='"+request.getParameter("userID")+"' OR email='"+request.getParameter("email")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
