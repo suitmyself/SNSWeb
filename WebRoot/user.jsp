@@ -28,8 +28,19 @@
 	<meta http-equiv="description" content="user.jsp">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style type="text/css">
-	.postBoard
-	{
+
+	button {
+		height: 30px;
+	}
+
+	#myPost {
+		width: 60%;
+		margin-left: 30px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+
+	.postBoard {
 		width: 80%;
 		height: 100%;
 		float: left;
@@ -39,16 +50,53 @@
 		padding-top: 20px;
 		padding-bottom: 20px;
 	}
-	.postItem
-	{
+
+	.postItem {
 		width: 90%;
 		float: left;
 		background-color: silver;
-		border-radius: 8px;
-		margin-left: 15px;
-		padding-top: 20px;
+		border-radius: 5px;
+		margin-left: 20px;
+		padding-top: 10px;
 		padding-bottom: 20px;
 	}
+
+	.originalText {
+		width: 90%;
+		float: left;
+		background-color: silver;
+		border-radius: 5px;
+		margin-left: 20px;
+		padding-top: 10px;
+		padding-bottom: 20px;
+	}
+
+	.replies {
+		width: 90%;
+		float: left;
+		background-color: silver;
+		border-radius: 5px;
+		margin-left: 50px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.replyText
+	{
+		padding-top: 10px;
+		padding-bottom 10px;
+	}
+
+	.toReply {
+		width: 90%;
+		float: left;
+		background-color: silver;
+		border-radius: 5px;
+		margin-left: 20px;
+		padding-top: 10px;
+		padding-bottom: 20px;
+	}
+
 	</style>
 
 	<script type="text/javascript">
@@ -129,24 +177,25 @@
     <%@ include file="navigator.jsp" %>
   	<%@ include file="module.jsp" %>
 	<div>
-		<textarea type="text" id="myPost" style="width:80%"></textarea>
-		<input style="height: 20; width:50" type="button" value="发布" onclick="submitPost()"/>
+		<textarea type="text" id="myPost"></textarea>
+		<button onclick="submitPost()">发布</button>
 	</div>
 	<%@ include file="accessDB.jsp" %>
 	<%
 	try {
-	String sql = "SELECT * FROM `t_sns`.`post`"
-				+ " WHERE re_id = -1"
-				+ " AND ("
-					+ "username = '" + userID + "'"
-					+ " OR "
-						+ "username IN ("
-									+ "SELECT username2 FROM friend_pair"
-									+ " WHERE username1 = '" + userID + "'"
-									+ ")"
-					+ " ) ORDER BY ts DESC";
+		//Query posts
+		String sql = "SELECT * FROM `t_sns`.`post`"
+					+ " WHERE re_id = -1"
+					+ " AND ("
+						+ "username = '" + userID + "'"
+						+ " OR "
+							+ "username IN ("
+										+ "SELECT username2 FROM friend_pair"
+										+ " WHERE username1 = '" + userID + "'"
+										+ ")"
+						+ " ) ORDER BY ts DESC";
 
-		System.out.println(sql);
+		//System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
 	%>
 	
@@ -155,11 +204,43 @@
 				<% String post_id = rs.getString("post_id"); %>
 				<div class="postItem">
 					<div class="postContent" id='<%= "PC_" + post_id %>' >
-						<p><%= rs.getString("username") %> 说：</p>
-						<p><%= rs.getString("content") %></p>
-						<p><%= rs.getString("ts") %></p>
+						<div class="originalText">
+							<p><strong><%= rs.getString("username") %> 说：</strong></p>
+							<p><%= rs.getString("content") %></p>
+							<p><i><%= rs.getString("ts") %></i></p>
+						</div>
+
+						<div class="replies">
+						<%
+							Connection conn2 = DriverManager.getConnection(DB_URL,USER,PASS);
+							Statement stmt2 = conn2.createStatement();
+							stmt2.executeQuery("SET NAMES UTF8");
+							String sql2 = "SELECT * FROM `t_sns`.`post`"
+									+ " WHERE re_id = " + post_id
+									+ " ORDER BY ts DESC";
+
+							System.out.println(sql2);
+							ResultSet rs2 = stmt2.executeQuery(sql2);
+
+							for ( ; rs2.next(); ) {
+						%>
+								<div class="replyText" id='<%= rs2.getString("post_id") %>'>
+									<p><strong><%= rs2.getString("username") %> 回复：</strong></p>
+									<p><%= rs2.getString("content") %></p>
+									<p><i><%= rs2.getString("ts") %></i></p>
+								</div>
+						<%
+							} //for rs2
+
+							rs2.close();
+							stmt2.close();
+							conn2.close();
+						%>
+						</div>
+						
 					</div>
-					<dir class="replyArea">
+
+					<dir class="toReply">
 						<button onClick="toggleReplyInput(<%= post_id %>)">显示/隐藏回复面板"</button>
 						<div class="inputReply" id='<%= "IR_" + post_id %>' style="display:none">
 							<textarea id='<%= "textRe" + post_id %>' ></textarea>
@@ -168,11 +249,16 @@
 					</dir>
 					
 				</div>
-			<% } %>
+			<%
+			} //for rs
+			%>
 		</div>
 
 	<%
-	}
+		rs.close();
+		stmt.close();
+		conn.close();
+	} //try
 	catch(SQLException se) {
 		//Handle errors for JDBC
 		out.println("<p>sorry,数据库错误</P>");

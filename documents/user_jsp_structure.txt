@@ -1,0 +1,15 @@
+postBoard
+	postItem
+		postContent (id, unused)
+			originalText
+			replies
+				replyText (id, unused)
+				...
+				replyText (id, unused)
+
+		toReply
+			inputReply (id, used for show/hide)
+				*textarea (id, used for content)
+	postItem
+	...
+	postItem
