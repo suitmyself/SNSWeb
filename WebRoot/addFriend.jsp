@@ -97,6 +97,7 @@
     		if (http_request.status == 200) 
        		{   // 信息已经成功返回，开始处理信息
         		document.getElementById("queryResult_").innerHTML = http_request.responseText;//获得返回的内容
+        		//alert(http_request.responseText);
         	}
         	/*
         	else 
@@ -113,11 +114,10 @@
 		var message=prompt("请输入验证信息");
 		if(message != null)
 		{
-			alert("addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>" +"&toUsername="+thisButton.id +"&message="+message);
-       		send_request("GET","addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>"
+       		send_request("post","addFriend_ajax.jsp",
+       					"fromUsername="+"<%= session.getAttribute("userID")%>"
         				+"&toUsername="+thisButton.id
         				+"&message="+message,
-        				null,
         				"text",
         				showFeedbackInfo2);
         }
@@ -132,10 +132,12 @@
        		{    // 信息已经成功返回，开始处理信息
        			 //alert(http_request.responseText.replace(/(^\s*)(\s*$)/g,""));        //需注意，利用这种方式可以查看返回的内容，alert()是一个用来调试的很好的函数，
         		 var message=http_request.responseText;
+        		 
         		 var i=message.indexOf("success");
         		 if(message.indexOf("success")!=-1)//获得返回的内容
         		 {
         		 	alert("请求已经发送");
+        		 	//alert(message);
         		 }
         		 else if(message.indexOf("fail")>=0)//获得返回的内容
         		 {

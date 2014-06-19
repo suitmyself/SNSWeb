@@ -32,9 +32,10 @@
 				+request.getParameter("fromUsername")+"','"
 				+request.getParameter("toUsername")+"','"
 				+request.getParameter("message")+"')";
-			System.out.println(sql);
 			stmt.executeUpdate(sql);
 			out.print("success");
+			String message = request.getParameter("message");
+			out.print(message);
 		}
 
 		//STEP 6: Clean-up environment
