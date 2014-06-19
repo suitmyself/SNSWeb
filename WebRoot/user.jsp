@@ -83,11 +83,20 @@
 				alert("请输入内容！");
 			}
 		}
+		
+		function toggleReplyInput(postID) {
+			if (document.getElementById("IR_" + postID).style.display == "none") {
+				document.getElementById("IR_" + postID).style.display = "block";
+			}
+			else {
+				document.getElementById("IR_" + postID).style.display = "none";
+			}
+		}
 
 		function submitReply(postID) {
-			var postDoc = document.getElementById(postID);
-			var strInput = postDoc.value;
-			if (strInput!="") {
+			var textRe = document.getElementById("textRe" + postID);
+			var strInput = textRe.value;
+			if (strInput != "") {
 				var xmlhttp = null;
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -97,10 +106,9 @@
 					// code for IE6, IE5
 					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 				}
-				if (xmlhttp!=null) {
+				if (xmlhttp != null) {
 					xmlhttp.onreadystatechange = function() {
-						if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-						
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 							window.location.reload();
 						}
 					}
@@ -121,28 +129,45 @@
     <%@ include file="navigator.jsp" %>
   	<%@ include file="module.jsp" %>
 	<div>
-		<textarea type="text" id="myPost"  rows=4 cols=15></textarea>
+		<textarea type="text" id="myPost" style="width:80%"></textarea>
 		<input style="height: 20; width:50" type="button" value="发布" onclick="submitPost()"/>
 	</div>
 	<%@ include file="accessDB.jsp" %>
 	<%
 	try {
-		String sql = "SELECT * FROM `t_sns`.`post` WHERE username='" + userID	+ "'"
-			+ " OR username IN (SELECT username2 FROM friend_pair WHERE username1='" + userID + "')"
-			+ " ORDER BY ts DESC";
+	String sql = "SELECT * FROM `t_sns`.`post`"
+				+ " WHERE re_id = -1"
+				+ " AND ("
+					+ "username = '" + userID + "'"
+					+ " OR "
+						+ "username IN ("
+									+ "SELECT username2 FROM friend_pair"
+									+ " WHERE username1 = '" + userID + "'"
+									+ ")"
+					+ " ) ORDER BY ts DESC";
+
 		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
 	%>
 	
 		<div class="postBoard">
 			<% for ( ; rs.next(); ) { %>
-			<div class="postItem" id=<%= rs.getString("post_id") %> >
-				<p><%= rs.getString("username") %> 说：</p>
-				<p><%= rs.getString("content") %></p>
-				<p><%= rs.getString("ts") %></p>
-				<button onClick="submitReply(<%= rs.getString("post_id") %>)">回复</button>
-				
-			</div>
+				<% String post_id = rs.getString("post_id"); %>
+				<div class="postItem">
+					<div class="postContent" id='<%= "PC_" + post_id %>' >
+						<p><%= rs.getString("username") %> 说：</p>
+						<p><%= rs.getString("content") %></p>
+						<p><%= rs.getString("ts") %></p>
+					</div>
+					<dir class="replyArea">
+						<button onClick="toggleReplyInput(<%= post_id %>)">显示/隐藏回复面板"</button>
+						<div class="inputReply" id='<%= "IR_" + post_id %>' style="display:none">
+							<textarea id='<%= "textRe" + post_id %>' ></textarea>
+							<button onClick="submitReply(<%= post_id %>)">提交</button>
+						</div>
+					</dir>
+					
+				</div>
 			<% } %>
 		</div>
 
