@@ -53,6 +53,8 @@
 				+request.getParameter("message")+"')";
 			stmt.executeUpdate(sql);
 			out.print("success");
+			String message = request.getParameter("message");
+			out.print(message);
 		}
 
 		//STEP 6: Clean-up environment
