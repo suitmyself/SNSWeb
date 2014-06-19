@@ -111,12 +111,15 @@
 	{
 		alert("注意：当您请求对方加为好友时，对方有权限同时加您为好友");
 		var message=prompt("请输入验证信息");
-        send_request("GET","addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>"
-        			+"&toUsername="+thisButton.id
-        			+"&message="+message,
-        			null,
-        			"text",
-        			showFeedbackInfo2);
+		if(message != null)
+		{
+       		send_request("GET","addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>"
+        				+"&toUsername="+thisButton.id
+        				+"&message="+message,
+        				null,
+        				"text",
+        				showFeedbackInfo2);
+        }
         
 	}
 

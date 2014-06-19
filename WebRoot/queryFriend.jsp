@@ -131,12 +131,13 @@
 		ResultSet rs = stmt.executeQuery(sql);
 	
 		//STEP 5: Extract data from result set
-		if(rs.next()) 
+		int count=0;
+		out.println("<table>");
+		out.println("<tr>");
+	    out.println("<th>用户名</th> <th>姓名</th> <th>学校</th> <th>学院</th> <th>专业</th><th>加为好友</th>");
+	    out.println("</tr>");
+		while(rs.next()) 
 		{
-			out.println("<table>");
-	        out.println("<tr>");
-	        out.println("<th>用户名</th> <th>姓名</th> <th>学校</th> <th>学院</th> <th>专业</th><th>加为好友</th>");
-	        out.println("</tr>");
 	        out.println("<tr>");
 	        out.println("<td>"+rs.getString("username")+"</td> ");
 	        out.println("<td>"+rs.getString("realname")+"</td> ");
@@ -144,30 +145,26 @@
 	        out.println("<td>"+rs.getString("school")+"</td> ");
 	        out.println("<td>"+rs.getString("major")+"</td> ");
 	        out.println("<td>");
-	        %>
-	        <input type="button" value="加为好友" id="<%= rs.getString("username")%> " onclick="addFriendFunc(this)">
-	        <% 
-	        out.println("</td>");
-	        out.println("</tr>");
-	        while(rs.next())
+	        Statement stmt2 = conn.createStatement();
+	        sql= "select * from friend_pair where username2 ='"+rs.getString("username")+"' and username1 ='"+session.getAttribute("userID")+"'";
+	        ResultSet rs2 =stmt2.executeQuery(sql);
+	        if(!rs2.next())
 	        {
-	        	out.println("<tr>");
-	        	out.println("<td>"+rs.getString("username")+"</td> ");
-	        	out.println("<td>"+rs.getString("realname")+"</td> ");
-	        	out.println("<td>"+rs.getString("university")+"</td> ");
-	        	out.println("<td>"+rs.getString("school")+"</td> ");
-	        	out.println("<td>"+rs.getString("major")+"</td> ");
-	        	out.println("<td>");
-	       	    %>
+	        %>
 	        	<input type="button" value="加为好友" id="<%= rs.getString("username")%> " onclick="addFriendFunc(this)">
-	        	<% 
-	        	out.println("</td>");
-	        	out.println("</tr>");
+	        <% 
 	        }
-	        
-			out.println("</table");
+	        else
+	        {
+	        %>
+	        	<input type="button" value="已是好友" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)">
+	        <% 
+	        }
+	        out.println("</td>");
+	        out.println("</tr>");	
 		}
-		else
+		out.println("</table");
+		if(count ==0 )
 		{
 			out.println("搜索结果为空");
 		}
