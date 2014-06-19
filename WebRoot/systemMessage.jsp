@@ -44,7 +44,7 @@
 		/*position:absolute;*/
 		position:relative;
 		width:90%;
-		height:150px;
+		height:180px;
 		/*text-align:center;*/
 		margin:10px;
 		left:5%;   
@@ -59,7 +59,7 @@
 		/*position:absolute;*/
 		position:relative;
 		width:90%;
-		height:150px;
+		height:180px;
 		/*text-align:center;*/
 		margin:10px;
 		left:5%;   
@@ -224,6 +224,7 @@
 			{
 				out.print("<div class=\"friendRequest\" >");
 				out.print("<h4 align=center>"+rs.getString("from_username")+"  请求加你好友</h4>");
+				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>验证信息: "+rs.getString("message")+"<hr>");
 				%>
 	       		<input type="button" value="接受" id="<%= rs.getInt("request_id")%> " onclick="acceptFunc(this)" class="acceptButton">
@@ -245,6 +246,7 @@
 			{
 				out.print("<div class=\"system_message\" >");
 				out.print("<h4 align=center>"+"  系统消息</h4>");
+				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>内容: "+rs.getString("content")+"<hr>");
 				%>
 	       		<input type="button" value="设定为已读" id="<%= rs.getInt("notice_id")%> " onclick="readFunc(this)" class="readButton">
@@ -265,6 +267,7 @@
 			{
 				out.print("<div class=\"system_message\" >");
 				out.print("<h4 align=center>"+"  系统消息</h4>");
+				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>内容: "+rs.getString("content")+"<hr>");
 				%>
 	       		<input type="button" value="已读" id="<%= rs.getInt("notice_id")%> " disabled onclick="readFunc(this)" class="disabledButton">
@@ -286,6 +289,7 @@
 			{
 				out.print("<div class=\"friendRequest\" >");
 				out.print("<h4 align=center>"+rs.getString("from_username")+"  请求加你好友</h4>");
+				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>验证信息: "+rs.getString("message")+"<hr>");
 				%>
 	       		<input type="button" value="已经接受" id="<%= rs.getInt("request_id")%> " disabled onclick="acceptFunc(this)" class="disabledButton">
@@ -307,6 +311,7 @@
 			{
 				out.print("<div class=\"friendRequest\" >");
 				out.print("<h4 align=center>"+rs.getString("from_username")+"  请求加你好友</h4>");
+				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>验证信息: "+rs.getString("message")+"<hr>");
 				%>
 	       		<input type="button" value="被拒绝" id="<%= rs.getInt("request_id")%> " disabled onclick="acceptFunc(this)" class="disabledButton">
