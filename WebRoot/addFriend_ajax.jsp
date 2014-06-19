@@ -3,30 +3,11 @@
 <%
 	response.setCharacterEncoding("UTF-8");
 	request.setCharacterEncoding("UTF-8");
-
-	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ include file="accessDB.jsp" %>
 <% 
-	String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	String DB_URL = "jdbc:mysql://localhost/t_sns";
-	//  Database credentials
-	String USER = "sns_admin";
-	String PASS = "CalRybMid3";   //此部分请注意修改密码
-	Connection conn = null;
-	Statement stmt = null;
 	try
 	{
-		//STEP 2: Register JDBC driver
-		Class.forName("com.mysql.jdbc.Driver");	   
-		//STEP 3: Open a connection
-		System.out.println("Connecting to database...");
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		//STEP 4: Execute a query
-		System.out.println("Creating statement...");
-		stmt = conn.createStatement();
-		String sql;
 		String username1=new String(request.getParameter("fromUsername"));
 		String username2=new String(request.getParameter("toUsername"));
 		/*
@@ -37,7 +18,7 @@
 			username2=temp;
 		}
 		*/
-		sql = "SELECT * FROM friend_pair where username1='"+username1+"' AND username2='"+username2+"'";
+		String sql = "SELECT * FROM friend_pair where username1='"+username1+"' AND username2='"+username2+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 	
 		//STEP 5: Extract data from result set
@@ -98,4 +79,3 @@
 		}
 	}
 %>
-  

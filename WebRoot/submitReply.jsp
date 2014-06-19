@@ -12,6 +12,8 @@
 	if(request.getParameter("words")!=null){
 		String content= java.net.URLDecoder.decode(request.getParameter("words"),"UTF-8");//获取请求参数  
 		String postID=request.getParameter("postID");//获取请求参数  
+
+		System.out.println("postID:" + postID);
 		String userID=(String)session.getAttribute("userID");
 		String releaseTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()); 
 
@@ -39,7 +41,7 @@
 		Connection conn = DriverManager.getConnection(connUrl);
 
 		//申明～？
-		Post stmt = conn.createPost();
+		Statement stmt = conn.createStatement();
 
 		//设置字符集
 		stmt.executeQuery("SET NAMES UTF8");

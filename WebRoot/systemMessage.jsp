@@ -1,6 +1,9 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.sql.*" %>
 <%
+	response.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
+
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -188,28 +191,11 @@
 <body>
     <%@ include file="navigator.jsp" %>
   	<%@ include file="module.jsp" %>
+	<%@ include file="accessDB.jsp" %>
   	<div class="systemMessage">
   	<% 
-	String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	String DB_URL = "jdbc:mysql://localhost/t_sns";
-	//  Database credentials
-	String USER = "sns_admin";
-	String PASS = "CalRybMid3";   //此部分请注意修改密码
-	Connection conn = null;
-	Statement stmt = null;
 	try
 	{
-	
-		//STEP 2: Register JDBC driver
-		Class.forName("com.mysql.jdbc.Driver");	   
-		//STEP 3: Open a connection
-		System.out.println("Connecting to database...");
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		//STEP 4: Execute a query
-		System.out.println("Creating statement...");
-		stmt = conn.createStatement();
-		
 		int count=0;
 		String sql="select * from add_friend_request where to_username='"
 					+session.getAttribute("userID")+"'";
