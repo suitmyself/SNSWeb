@@ -27,6 +27,7 @@
 
 <%@ include file="accessDB.jsp" %>
 <% 
+   try{
 		String sql;
 		sql = "SELECT * FROM account where username='"+request.getParameter("userID")+"' OR email='"+request.getParameter("email")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
