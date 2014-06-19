@@ -113,6 +113,7 @@
 		var message=prompt("请输入验证信息");
 		if(message != null)
 		{
+			alert("addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>" +"&toUsername="+thisButton.id +"&message="+message);
        		send_request("GET","addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>"
         				+"&toUsername="+thisButton.id
         				+"&message="+message,
