@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.Calendar"%>
 <%
@@ -57,26 +56,11 @@ td
 </style>
 </head>
 <body onload="load()">  <!-- 这样子就可以载入了 -->
+<%@ include file="accessDB.jsp" %>
 <% 
-	String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	String DB_URL = "jdbc:mysql://localhost/t_sns";
-	//  Database credentials
-	String USER = "sns_admin";
-	String PASS = "CalRybMid3";
-	Connection conn = null;
-	Statement stmt = null;
 	try
 	{
-		//STEP 2: Register JDBC driver
-		Class.forName("com.mysql.jdbc.Driver");	   
-		//STEP 3: Open a connection
-		System.out.println("Connecting to database...");
-		conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		//STEP 4: Execute a query
-		System.out.println("Creating statement...");
-		stmt = conn.createStatement();
-		String sql;
-		sql = "SELECT * FROM user_info where username='"+session.getAttribute("userID")+"'";
+		String sql = "SELECT * FROM user_info where username='"+session.getAttribute("userID")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 		
 		//STEP 5: Extract data from result set
