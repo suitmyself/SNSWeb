@@ -100,11 +100,32 @@
 	</style>
 
 	<script type="text/javascript">
+		updatePostBoard();
+
+		setInterval("updatePostBoard()", 30000);
+
+		function updatePostBoard() {
+			var xmlhttp;
+			if (window.XMLHttpRequest) {
+				xmlhttp = new XMLHttpRequest();
+			}
+			else {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					document.getElementById("dynamics").innerHTML=xmlhttp.responseText;
+				}
+			}
+			xmlhttp.open("GET", "view.jsp?t=" + Math.random(), true);
+			xmlhttp.send();
+		}
+
 		function submitPost() {
 			var myPost = document.getElementById("myPost");
 			var strInput = myPost.value;
 			if (strInput != "") {
-				var xmlhttp = null;
+				var xmlhttp;
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp = new XMLHttpRequest();
@@ -113,18 +134,18 @@
 					// code for IE6, IE5
 					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 				}
-				
+
 				if (xmlhttp != null) {
 					xmlhttp.onreadystatechange = function() {
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							window.location.reload();
+							updatePostBoard();
 						}
 					}
 					strInput = "submitPost.jsp?words="+strInput;
 					// fixme why encodeURI twice
 					strInput = encodeURI(strInput);
 					strInput = encodeURI(strInput);
-					xmlhttp.open("GET", strInput, true);
+					xmlhttp.open("POST", strInput, true);
 					xmlhttp.send();
 				}
 			} else {
@@ -145,7 +166,7 @@
 			var textRe = document.getElementById("textRe" + postID);
 			var strInput = textRe.value;
 			if (strInput != "") {
-				var xmlhttp = null;
+				var xmlhttp;
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp = new XMLHttpRequest();
@@ -157,14 +178,14 @@
 				if (xmlhttp != null) {
 					xmlhttp.onreadystatechange = function() {
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							window.location.reload();
+							updatePostBoard();
 						}
 					}
 					strInput = "submitReply.jsp?words="+strInput+"&postID="+postID;
 					// fixme why encodeURI twice
 					strInput = encodeURI(strInput);
 					strInput = encodeURI(strInput);
-					xmlhttp.open("GET",strInput,true);
+					xmlhttp.open("POST", strInput, true);
 					xmlhttp.send();
 				}
 			} else {
@@ -180,112 +201,7 @@
 		<textarea type="text" id="myPost"></textarea>
 		<button onclick="submitPost()">发布</button>
 	</div>
-	<%@ include file="accessDB.jsp" %>
-	<%
-	try {
-		//Query posts
-		String sql = "SELECT * FROM `t_sns`.`post`"
-					+ " WHERE re_id = -1"
-					+ " AND ("
-						+ "username = '" + userID + "'"
-						+ " OR "
-							+ "username IN ("
-										+ "SELECT username2 FROM friend_pair"
-										+ " WHERE username1 = '" + userID + "'"
-										+ ")"
-						+ " ) ORDER BY ts DESC";
+	<div class="postBoard" id="dynamics"></div>
 
-		//System.out.println(sql);
-		ResultSet rs = stmt.executeQuery(sql);
-	%>
-	
-		<div class="postBoard">
-			<% for ( ; rs.next(); ) { %>
-				<% String post_id = rs.getString("post_id"); %>
-				<div class="postItem">
-					<div class="postContent" id='<%= "PC_" + post_id %>' >
-						<div class="originalText">
-							<p><strong><%= rs.getString("username") %> 说：</strong></p>
-							<p><%= rs.getString("content") %></p>
-							<p><i><%= rs.getString("ts") %></i></p>
-						</div>
-
-						<div class="replies">
-						<%
-							Connection conn2 = DriverManager.getConnection(DB_URL,USER,PASS);
-							Statement stmt2 = conn2.createStatement();
-							stmt2.executeQuery("SET NAMES UTF8");
-							String sql2 = "SELECT * FROM `t_sns`.`post`"
-									+ " WHERE re_id = " + post_id
-									+ " ORDER BY ts DESC";
-
-							System.out.println(sql2);
-							ResultSet rs2 = stmt2.executeQuery(sql2);
-
-							for ( ; rs2.next(); ) {
-						%>
-								<div class="replyText" id='<%= rs2.getString("post_id") %>'>
-									<p><strong><%= rs2.getString("username") %> 回复：</strong></p>
-									<p><%= rs2.getString("content") %></p>
-									<p><i><%= rs2.getString("ts") %></i></p>
-								</div>
-						<%
-							} //for rs2
-
-							rs2.close();
-							stmt2.close();
-							conn2.close();
-						%>
-						</div>
-						
-					</div>
-
-					<dir class="toReply">
-						<button onClick="toggleReplyInput(<%= post_id %>)">显示/隐藏回复面板"</button>
-						<div class="inputReply" id='<%= "IR_" + post_id %>' style="display:none">
-							<textarea id='<%= "textRe" + post_id %>' ></textarea>
-							<button onClick="submitReply(<%= post_id %>)">提交</button>
-						</div>
-					</dir>
-					
-				</div>
-			<%
-			} //for rs
-			%>
-		</div>
-
-	<%
-		rs.close();
-		stmt.close();
-		conn.close();
-	} //try
-	catch(SQLException se) {
-		//Handle errors for JDBC
-		out.println("<p>sorry,数据库错误</P>");
-		se.printStackTrace();
-	}
-	catch(Exception e) {
-		//Handle errors for Class.forName
-		out.println("<p>sorry,数据库错误</P>");
-		e.printStackTrace();
-	}
-	finally {
-		//finally block used to close resources
-		try {
-			if(stmt!=null) stmt.close();
-		}
-		catch(SQLException se2)
-		{
-			out.println("<p>sorry,数据库错误</P>");
-		}// nothing we can do
-		try {
-			 if(conn!=null) conn.close();
-		}
-		catch(SQLException se) {
-			out.println("<p>sorry,数据库错误</P>");
-			se.printStackTrace();
-		}
-	}
-	%>
 </body>
 </html>
