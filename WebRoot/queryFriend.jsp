@@ -148,7 +148,13 @@
 	        Statement stmt2 = conn.createStatement();
 	        sql= "select * from friend_pair where username2 ='"+rs.getString("username")+"' and username1 ='"+session.getAttribute("userID")+"'";
 	        ResultSet rs2 =stmt2.executeQuery(sql);
-	        if(!rs2.next())
+	        if(rs.getString("username").equals(session.getAttribute("userID")))
+	        {
+	        %>
+	        	<input type="button" value="自己" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)">
+	        <%
+	        }
+	        else if(!rs2.next())
 	        {
 	        %>
 	        	<input type="button" value="加为好友" id="<%= rs.getString("username")%> " onclick="addFriendFunc(this)">
