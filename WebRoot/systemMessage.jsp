@@ -45,14 +45,16 @@
 		border: 1px solid #BDC7D8;
 		background-color:#DA70D6;
 		/*position:absolute;*/
-		position:relative;
+		/*position:relative;*/
+		float:left;
 		width:90%;
-		height:220px;
+		/*height:220px;*/
 		/*text-align:center;*/
-		margin:10px;
+		margin:15px;
 		left:5%;   
         /*top:30%; */
         box-shadow: 0px 2px 2px #CCC;
+        padding:5px;
 	}
 	
 	.system_message
@@ -62,13 +64,15 @@
 		background-color:#FFFF00;
 		/*position:absolute;*/
 		position:relative;
+		float:left;
 		width:90%;
-		height:220px;
+		/*height:220px;*/
 		/*text-align:center;*/
-		margin:10px;
-		left:5%;   
+		margin:15px;
+		left:0%;   
         /*top:30%; */
         box-shadow: 0px 2px 2px #CCC;
+        padding:5px;
 	}
 	
 	.acceptButton, .rejectButton,.readButton
@@ -89,23 +93,34 @@
 		float: right;
 		right: 50 px;
 	}
+	
 	.disabledButton
 	{
+		
 		width: 100px;
 		height: 30px;
-		margin: 0px 20px;
-		display: inline;
+		
+		margin: 0px 0px;
+		display: inline-block;
+		
 		cursor: pointer;
 		color: black;
+		
 		font-size: 15px;
 		font-weight: 700;
 		font-family: "微软雅黑";
+		
 		border: 1px solid #3B6E22;
 		border-radius: 5px;
 		background-color:#505050;
-		/*position: relative;*/
+		
+		position: relative;
+		margin-left: 10px;
 		float: right;
+		
 		right: 50 px;
+		bottom:30 px;
+		
 	}
 	.readButton
 	{

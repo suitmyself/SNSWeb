@@ -30,7 +30,7 @@
 	.addFriend
 	{
 		width: 80%;
-		height: 1000px;
+		/*height: 1000px;*/
 		float: left;
 		background-color:#D9D9D9;
 		border-radius: 8px;
