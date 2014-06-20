@@ -57,52 +57,13 @@
 		/*margin-right: 29px;*/
   	}
     </style>
-    
-	<script type="text/javascript">
-	function addFriendFunc(thisButton) 
-	{
-		//alert("add_ajax");
-		alert("called");
-        send_request("GET","addFriend_ajax.jsp?fromUsername="+"<%= session.getAttribute("userID")%>"
-        			+"&toUsername="+thisButton.id,
-        			null,
-        			"text",
-        			showFeedbackInfo2);
-	}
-
-	function showFeedbackInfo2() 
-	{
-		if (http_request.readyState == 4) 
-    	{       // 判断对象状态
-    		if (http_request.status == 200) 
-       		{    // 信息已经成功返回，开始处理信息
-       			 //alert(http_request.responseText.replace(/(^\s*)(\s*$)/g,""));        //需注意，利用这种方式可以查看返回的内容，alert()是一个用来调试的很好的函数，
-        		 var message=http_request.responseText;
-        		 var i=message.indexOf("success");
-        		 if(message.indexOf("success")!=-1)//获得返回的内容
-        		 {
-        		 	alert("请求已经发送");
-        		 }
-        		 else if(message.indexOf("fail")>=0)//获得返回的内容
-        		 {
-        		 	alert("失败");
-        		 }
-        		 else
-        		 {
-        		 	alert("未知原因失败，可能是数据库出误");
-        		 	var mess=http_request.responseText;
-        		 	alert(mess.length);	
-        		 }
-        	}
-    	}
-	}
-	</script>
 	<script type="text/javascript" src="ajax.js"></script>
    
 </head>
 <% 
 	//System.out.println("querytype:"+request.getParameter("queryType"));
-	if((!request.getParameter("queryType").equals("all"))&&(request.getParameter("queryText").equals("")||request.getParameter("queryText")==null||request.getParameter("queryText").length()==0))
+	String queryText = java.net.URLDecoder.decode(request.getParameter("queryText"), "UTF-8");
+	if((!request.getParameter("queryType").equals("all"))&&(queryText.equals("")||queryText==null||queryText.length()==0))
 	{
    		out.println("输入为空值");
 		return;
@@ -121,19 +82,19 @@
 		}
 		if(request.getParameter("queryType").equals("username"))
 		{
-			sql = "SELECT * FROM user_info where username='"+request.getParameter("queryText")+"'";
+			sql = "SELECT * FROM user_info where username='"+queryText+"'";
 		}
 		if(request.getParameter("queryType").equals("university"))
 		{
-			sql = "SELECT * FROM user_info where university='"+request.getParameter("queryText")+"'";
+			sql = "SELECT * FROM user_info where university='"+queryText+"'";
 		}
 		if(request.getParameter("queryType").equals("school"))
 		{
-			sql = "SELECT * FROM user_info where school='"+request.getParameter("queryText")+"'";
+			sql = "SELECT * FROM user_info where school='"+queryText+"'";
 		}
 		if(request.getParameter("queryType").equals("major"))
 		{
-			sql = "SELECT * FROM user_info where major='"+request.getParameter("queryText")+"'";
+			sql = "SELECT * FROM user_info where major='"+queryText+"'";
 		}
 		
 		ResultSet rs = stmt.executeQuery(sql);
@@ -146,6 +107,7 @@
 	    out.println("</tr>");
 		while(rs.next()) 
 		{
+			++count;
 	        out.println("<tr>");
 	        out.println("<td>"+rs.getString("username")+"</td> ");
 	        out.println("<td>"+rs.getString("realname")+"</td> ");
@@ -159,26 +121,26 @@
 	        if(rs.getString("username").equals(session.getAttribute("userID")))
 	        {
 	        %>
-	        	<input type="button" class="addButton" value="自己" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)" style="background-color: #FF4500">
+	        	<input type="button" class="addButton" value="自己" id="<%= rs.getString("username")%>" disabled onclick="addFriendFunc(this)" style="background-color: #FF4500">
 	        <%
 	        }
 	        else if(!rs2.next())
 	        {
 	        %>
-	        	<input type="button" class="addButton" value="加为好友" id="<%= rs.getString("username")%> " onclick="addFriendFunc(this)">
+	        	<input type="button" class="addButton" value="加为好友" id="<%= rs.getString("username")%>" onclick="addFriendFunc(this)">
 	        <% 
 	        }
 	        else
 	        {
 	        %>
-	        	<input type="button" class="addButton" value="已是好友" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)" style="background-color: #FF4500">
+	        	<input type="button" class="addButton" value="已是好友" id="<%= rs.getString("username")%>" disabled onclick="addFriendFunc(this)" style="background-color: #FF4500">
 	        <% 
 	        }
 	        out.println("</td>");
 	        out.println("</tr>");	
 		}
-		out.println("</table");
-		if(count ==0 )
+		out.println("</table>");
+		if(count == 0 )
 		{
 			out.println("搜索结果为空");
 		}

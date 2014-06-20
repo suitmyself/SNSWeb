@@ -24,14 +24,14 @@
 
 <% 
 	try {
-		String sql = "SELECT * FROM account where username='"+request.getParameter("userID")+"'";
+		String sql = "SELECT * FROM account where username='"+java.net.URLDecoder.decode(request.getParameter("userID"), "UTF-8")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 		//STEP 5: Extract data from result set
 		if(rs.next()) 
 		{
-			if(rs.getString("password").equals(request.getParameter("password")))
+			if(rs.getString("password").equals(java.net.URLDecoder.decode(request.getParameter("password"), "UTF-8")))
 			{
-				session.setAttribute("userID",request.getParameter("userID"));
+				session.setAttribute("userID",java.net.URLDecoder.decode(request.getParameter("userID"), "UTF-8"));
 				out.println("<h2>验证正确</h2>");
 				out.println("<p><span id='timing'>3</span>秒后返回<a href='user.jsp' >用户</a>页面！</p>");
 		    	String content=3+";URL="+"user.jsp";

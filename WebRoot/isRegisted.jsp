@@ -7,13 +7,15 @@
 
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+	String userID = java.net.URLDecoder.decode(request.getParameter("userID"), "UTF-8");
 %>
 <head>
     <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <% 
-	if(request.getParameter("userID").equals("")||request.getParameter("userID")==null||request.getParameter("userID").length()==0)
+	if(userID.equals("")||userID==null||userID.length()==0)
 	{
    		out.println("空值");
 		return;
@@ -24,7 +26,7 @@
 <%
 	try {
 		String sql;
-		sql = "SELECT * FROM account where username='"+request.getParameter("userID")+"' OR email='"+request.getParameter("email")+"'";
+		sql = "SELECT * FROM account where username='"+userID+"' OR email='"+java.net.URLDecoder.decode(request.getParameter("email"), "UTF-8")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 	
 		//STEP 5: Extract data from result set
@@ -78,8 +80,3 @@
 		}
 	}
 %>
-  
-  
- 
-
-

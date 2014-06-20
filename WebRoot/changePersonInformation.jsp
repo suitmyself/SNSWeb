@@ -17,7 +17,7 @@
 <% 
 	try
 	{
-		String sql = "SELECT * FROM account where username='"+session.getAttribute("userID")+"'";
+		String sql = "SELECT * FROM account WHERE username='"+session.getAttribute("userID")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 		//STEP 5: Extract data from result set
 		if(rs.next()) 
@@ -26,7 +26,7 @@
 			out.println("<h2>验证正确</h2>");
 			
 			
-			String realname = request.getParameter("realname");
+			String realname = request.getParameter("name");
 			String      sex = request.getParameter("gender");
 			String     year = request.getParameter("year");
 			String    mouth = request.getParameter("mouth");

@@ -1,6 +1,9 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.sql.*" %>
 <%
+	response.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
+
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -12,7 +15,10 @@
 <% 
 	try
 	{
-		String sql = "Delete FROM friend_pair where username1='"+request.getParameter("username1")+"' and username2='"+request.getParameter("username2")+"'";
+		String username1 = java.net.URLDecoder.decode(request.getParameter("username1"), "UTF-8");
+		String username2 = java.net.URLDecoder.decode(request.getParameter("username2"), "UTF-8");
+		String sql = "DELETE FROM friend_pair WHERE username1='" + username1 + "' AND username2='" + username2 + "'";
+		//out.println(sql + "\n");
 		stmt.executeUpdate(sql);
 	    out.print("success");
 		//STEP 6: Clean-up environment

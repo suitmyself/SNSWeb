@@ -1,5 +1,5 @@
-daniel,Daniel Dong,1,\N,1992-02-02,Peking University,School of Foundational Education,Biomedical English,2011,\N,\N
-hitler
+daniel,董瀚,1,\N,1992-02-02,Peking University,School of Foundational Education,Biomedical English,2011,\N,\N
+hitler,Adolf Hitler,1,\N,\N,Berlin Universität,\N,War design,1919,\N,\N
 001
 002
 003

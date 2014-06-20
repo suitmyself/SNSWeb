@@ -35,7 +35,7 @@ request.setCharacterEncoding("UTF-8");
     	if(document.getElementById("userID_")!="") 
     	{
     		document.getElementById("isRegisted").innerHTML = "系统正在处理您的请求，请稍后。";
-        	send_request("GET","isRegisted.jsp?userID="+document.getElementById("userID_").value+"&email="+document.getElementById("email_").value,null,"text",showFeedbackInfo);
+        	send_request("GET",encodeURI(encodeURI("isRegisted.jsp?userID="+document.getElementById("userID_").value+"&email="+document.getElementById("email_").value)),null,"text",showFeedbackInfo);
     	}
     	else 
     	{

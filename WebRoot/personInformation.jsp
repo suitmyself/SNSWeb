@@ -78,46 +78,46 @@ td
 
 <body onload="load()" >  <!-- 这样子就可以载入了 -->
 <%@ include file="navigator.jsp" %>
- <%@ include file="module.jsp" %>
+<%@ include file="module.jsp" %>
 
 <% 
 	try
 	{
-		String sql = "SELECT * FROM user_info where username='"+session.getAttribute("userID")+"'";
+		String sql = "SELECT * FROM account NATURAL JOIN user_info WHERE username='"+session.getAttribute("userID")+"'";
+		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
 		
-		//STEP 5: Extract data from result set
 		if(rs.next()) 
 		{
 		    String username = rs.getString("username");
+			String email = rs.getString("email");
 			String name     = rs.getString("realname");
 			int    sex      = rs.getShort("sex");
  			Date   birthday = rs.getDate("birthday");
+ 			String university = rs.getString("university");
+  			String school = rs.getString("school");
+  			String major = rs.getString("major");
+			String signature = rs.getString("signature");
+
+			System.out.println(username);
+
+ 			if (birthday == null) {  //To avoid NullPointerException
+ 				birthday = new Date(0);
+ 			}
+
+			//System.out.println(birthday);
  			
  			Calendar cal=Calendar.getInstance();
             cal.setTime(birthday);
             int day = cal.get(Calendar.DAY_OF_MONTH); //日
 			int mouth = cal.get(Calendar.MONTH) + 1; //月(从0开始, 一般加1，实际是否 Calendar 里面常量的值决定的)
 			int year = cal.get(Calendar.YEAR); //年
-			
- 			String university = rs.getString("university");
-  			String school = rs.getString("school");
-  			String major = rs.getString("major");
-			String signature = rs.getString("signature");
-			
-			System.out.println("university: "+university);
- 			System.out.println("school: "+school);
- 			System.out.println("major:"+major);
-			
-			sql = "SELECT * FROM account where username='"+session.getAttribute("userID")+"'";
-			ResultSet rs1 = stmt.executeQuery(sql);
-			rs1.next();
-			String email = rs1.getString("email");
+
 			%>
 				<script type="text/javascript">
 				function load()
 				{
-					//alert("load");
+					alert("load");
 					document.getElementById("userID_").value= "<%= session.getAttribute("userID")%>";
 					document.getElementById("name_").value= "<%= name %>";
 					document.getElementById("university_").value= "<%= university %>";
