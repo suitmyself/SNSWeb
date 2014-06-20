@@ -32,11 +32,17 @@
 			String    mouth = request.getParameter("mouth");
 			String      day = request.getParameter("day");
 			String signature= request.getParameter("signature");
+			String university = request.getParameter("university");
+			String school = request.getParameter("school");
+			String major = request.getParameter("major");
 			
  			sql = "UPDATE user_info SET realname='"+realname+"',"+
  			                                "sex= "+Short.parseShort(sex)+","+
  			                           "birthday='"+year+"-"+mouth+"-"+day+"',"+
- 			                          "signature='"+signature+"'"+
+ 			                          "signature='"+signature+"',"+
+ 			                          "university='"+university+"',"+
+ 			                          "school='"+school+"',"+
+ 			                          "major='"+major+"'"+
  			      "Where username='"+session.getAttribute("userID")+"'";
 			stmt.executeUpdate(sql);
 			
