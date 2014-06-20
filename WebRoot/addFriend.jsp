@@ -32,7 +32,7 @@
 		width: 80%;
 		height: 1000px;
 		float: left;
-		background-color: blue;
+		background-color:#D9D9D9;
 		border-radius: 8px;
 		margin-left: 15px;
 		padding-top: 20px;
@@ -52,7 +52,7 @@
 	.query
 	{
 		width: 100px;
-		height: 40px;
+		height: 38px;
 		margin: 10px 0px;
 		display: inline;
 		cursor: pointer;
@@ -65,6 +65,7 @@
 		background-color:#00FF00;
 		position: relative;
 		right: 50 px;
+		bottom: -3px;
 	}
 	</style>
 	

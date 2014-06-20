@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.sql.*" %>
+
 <%
 	response.setCharacterEncoding("UTF-8");
 	request.setCharacterEncoding("UTF-8");
@@ -32,7 +32,7 @@
 		width: 80%;
 		height: 100%;
 		float: left;
-		background-color: blue;
+		background-color: #D9D9D9;
 		border-radius: 8px;
 		margin-left: 15px;
 		padding-top: 20px;
@@ -64,12 +64,33 @@
   		background-color:#A7C942;
   		color:#ffffff;
   	}
+  	.deleteButton
+  	{
+  		/*height: 30px;*/
+		margin-left: 10px;
+		adding: 0px 30px;
+		display: inline-block;
+        font-size: 14px;
+        line-height: 28px;
+        color: #666;
+		text-align: center;
+		vertical-align: middle;
+		cursor: pointer;
+		/*background: linear-gradient(to bottom, #FEFEFE 0px, #F8F8F8 100%) repeat scroll 0% 0% #FBFBFB;*/
+		border: 1px solid #A7ACB5;
+		border-radius: 3px;
+		box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+		/*position: relative;*/
+		/*bottom: 10px;*/
+		/*float: right;*/
+		/*margin-right: 29px;*/
+  	}
 
     </style>
 	<script type="text/javascript">
 	function deleteFriend(thisButton) 
 	{
-		alert("delete");
+		//alert("delete");
 		send_request("GET","deleteFriend.jsp?username1="+"<%= session.getAttribute("userID")%>"
         			+"&username2="+thisButton.id,
         			null,
@@ -83,7 +104,7 @@
     	{       // 判断对象状态
     		if (http_request.status == 200) 
        		{    // 信息已经成功返回，开始处理信息
-       			 alert("已经返回");
+       			 //alert("已经返回");
         		 var message=http_request.responseText;
         		 var i=message.indexOf("success");
         		 if(message.indexOf("success")!=-1)//获得返回的内容
@@ -109,7 +130,7 @@
   	<%@ include file="module.jsp" %>
   	<div class=friendManager>
   	<center>
-	<%@ include file="accessDB.jsp" %>
+	
   	<% 
 	try
 	{
@@ -134,7 +155,7 @@
 	        out.println("<td>"+rs.getString("major")+"</td> ");
 	        out.println("<td>");
 	        %>
-	        <input type="button" value="删除好友" id="<%= rs.getString("username")%>" onclick="deleteFriend(this)">
+	        <input type="button" value="删除好友" id="<%= rs.getString("username")%>" class="deleteButton" onclick="deleteFriend(this)">
 	        <% 
 	        out.println("</td>");
 	        out.println("</tr>");
@@ -148,7 +169,7 @@
 	        	out.println("<td>"+rs.getString("major")+"</td> ");
 	        	out.println("<td>");
 	       	    %>
-	        	<input type="button" value="删除好友" id="<%= rs.getString("username")%> " onclick="deleteFriend(this)">
+	        	<input type="button" value="删除好友" id="<%= rs.getString("username")%> "class="deleteButton" onclick="deleteFriend(this)">
 	        	<% 
 	        	out.println("</td>");
 	        	out.println("</tr>");

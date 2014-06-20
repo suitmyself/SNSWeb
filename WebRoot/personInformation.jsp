@@ -1,24 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.Calendar"%>
+<%@ page language="java"  contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.Calendar "%>
 <%
 	response.setCharacterEncoding("UTF-8");
 	request.setCharacterEncoding("UTF-8");
-%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <%
-	if (session.isNew() || session.getAttribute("userID") == null)
+	String userID = (String) session.getAttribute("userID");
+	if (session.isNew() || userID == null)
 	{
 		response.sendRedirect("login.jsp");
-		System.out.println("转向到登录页面");
+		//System.out.println("转向到登录页面");
 		return;
 	}
 %>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>个人信息</title>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    <title>用户界面</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="description" content="user.jsp">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 .userID,.country,.email,.phone,.name,.university,.school,.major
 {
@@ -52,11 +61,25 @@ td
 	padding-bottom: 10px;
 	padding-top:10px;
 }
+.personInf
+{
+	width: 80%;
+	height: 1000px;
+	float: left;
+	background-color: #D9D9D9;
+	border-radius: 8px;
+	margin-left: 15px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
 
 </style>
 </head>
-<body onload="load()">  <!-- 这样子就可以载入了 -->
-<%@ include file="accessDB.jsp" %>
+
+<body onload="load()" >  <!-- 这样子就可以载入了 -->
+<%@ include file="navigator.jsp" %>
+ <%@ include file="module.jsp" %>
+
 <% 
 	try
 	{
@@ -94,6 +117,7 @@ td
 				<script type="text/javascript">
 				function load()
 				{
+					//alert("load");
 					document.getElementById("userID_").value= "<%= session.getAttribute("userID")%>";
 					document.getElementById("name_").value= "<%= name %>";
 					document.getElementById("university_").value= "<%= university %>";
@@ -188,7 +212,7 @@ td
 	}
 %>
 
-  	<div>
+  	<div class="personInf">
 	<h1 align="center">个人信息页面</h1>
 	<hr>
 	<br>

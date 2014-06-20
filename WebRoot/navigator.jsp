@@ -19,7 +19,7 @@ if (session.isNew()||session.getAttribute("userID")==null)
 	{
 		overflow:hidden;
 		text-align: center;
-		background-color:333399;
+		background-color:#98FB98;
 		/*position: fixed;*/
 		width: 100%;
 		height:40px;
@@ -45,7 +45,7 @@ if (session.isNew()||session.getAttribute("userID")==null)
 		/*position:;*/
 		float:right;
 	}
-	.navigator a:link,a:visited
+	.navigator a:link,.navigator a:visited
 	{
 		display:block;
 		padding:0px;
@@ -53,11 +53,11 @@ if (session.isNew()||session.getAttribute("userID")==null)
 		width:150px;
 		height:100%;
 		font-weight:bold;
-		color:#FFF;
+		color:blue;
 		/*text-decoration:none;*/
 	}
 
-	.navigator a:hover,a:active
+	.navigator a:hover,.navigator a:active
 	{
 		background-color:#F00;
 	}

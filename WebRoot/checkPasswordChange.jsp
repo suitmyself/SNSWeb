@@ -10,6 +10,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<script type="text/javascript"> //倒计时
+		var t;
+		function timeCount()
+		{
+			document.getElementById("timing").innerHTML=document.getElementById("timing").innerHTML-1;
+			t=setTimeout("timeCount()",1000);
+		}
+</script>
 </head>
 <body>
 <%@ include file="accessDB.jsp" %>

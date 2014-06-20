@@ -95,6 +95,11 @@ td
 	padding-top:10px;
 }
 
+body
+{
+	background-image:url(background2.jpg);
+}
+
 </style>
 </head>
 <body>

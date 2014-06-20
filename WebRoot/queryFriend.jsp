@@ -35,6 +35,27 @@
   		background-color:#A7C942;
   		color:#ffffff;
   	}
+  	.addButton
+  	{
+  		/*height: 30px;*/
+		margin-left: 10px;
+		adding: 0px 30px;
+		display: inline-block;
+        font-size: 14px;
+        line-height: 28px;
+        color: #666;
+		text-align: center;
+		vertical-align: middle;
+		cursor: pointer;
+		/*background: linear-gradient(to bottom, #FEFEFE 0px, #F8F8F8 100%) repeat scroll 0% 0% #FBFBFB;*/
+		border: 1px solid #A7ACB5;
+		border-radius: 3px;
+		box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+		/*position: relative;*/
+		/*bottom: 10px;*/
+		/*float: right;*/
+		/*margin-right: 29px;*/
+  	}
     </style>
     
 	<script type="text/javascript">
@@ -138,19 +159,19 @@
 	        if(rs.getString("username").equals(session.getAttribute("userID")))
 	        {
 	        %>
-	        	<input type="button" value="自己" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)">
+	        	<input type="button" class="addButton" value="自己" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)" style="background-color: #FF4500">
 	        <%
 	        }
 	        else if(!rs2.next())
 	        {
 	        %>
-	        	<input type="button" value="加为好友" id="<%= rs.getString("username")%> " onclick="addFriendFunc(this)">
+	        	<input type="button" class="addButton" value="加为好友" id="<%= rs.getString("username")%> " onclick="addFriendFunc(this)">
 	        <% 
 	        }
 	        else
 	        {
 	        %>
-	        	<input type="button" value="已是好友" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)">
+	        	<input type="button" class="addButton" value="已是好友" id="<%= rs.getString("username")%> " disabled onclick="addFriendFunc(this)" style="background-color: #FF4500">
 	        <% 
 	        }
 	        out.println("</td>");

@@ -40,12 +40,13 @@ try {
 			<div class="postItem">
 				<div class="postContent" id='<%= "PC_" + post_id %>' >
 					<div class="originalText">
-						<p><strong><%= rs.getString("username") %> 说：</strong></p>
-						<p><%= rs.getString("content") %></p>
-						<p><i><%= rs.getString("ts") %></i></p>
+						<p><strong style="font-weight: bold; color: #333; font-size:15px;">
+						&nbsp;&nbsp;<%= rs.getString("username") %></strong> &nbsp;发布状态  
+						&nbsp;&nbsp; 时间:  <i><%= rs.getString("ts") %></i></p>
+						<p class="content"><%= rs.getString("content") %></p>
 					</div>
 
-					<div class="replies">
+					
 					<%
 						Connection conn2 = DriverManager.getConnection(DB_URL,USER,PASS);
 						Statement stmt2 = conn2.createStatement();
@@ -59,10 +60,13 @@ try {
 
 						for ( ; rs2.next(); ) {
 					%>
+							<div class="replies">
 							<div class="replyText" id='<%= rs2.getString("post_id") %>'>
-								<p><strong><%= rs2.getString("username") %> 回复：</strong></p>
+								<strong><%= rs2.getString("username") %> 回复：</strong>
+								&nbsp;&nbsp;&nbsp;时间(<i><%= rs2.getString("ts") %></i>)
 								<p><%= rs2.getString("content") %></p>
-								<p><i><%= rs2.getString("ts") %></i></p>
+								
+							</div>
 							</div>
 					<%
 						} //for rs2
@@ -71,17 +75,25 @@ try {
 						stmt2.close();
 						conn2.close();
 					%>
-					</div>
+					
 					
 				</div>
 
-				<dir class="toReply">
-					<button onClick="toggleReplyInput(<%= post_id %>)">显示/隐藏回复面板</button>
-					<div class="inputReply" id='<%= "IR_" + post_id %>' style="display:none">
-						<textarea id='<%= "textRe" + post_id %>' ></textarea>
-						<button onClick="submitReply(<%= post_id %>)">提交</button>
+				<div class="toReply">
+					<!--  <button onClick="toggleReplyInput(<%//= post_id %>)">显示/隐藏回复面板</button>-->
+					<div class="inputReply" id='<%= "IR_" + post_id %>' style="display:block">
+						<textarea id='<%= "textRe" + post_id %>' class="to_ReplayText" rows="1" 
+						onfocus="onfocusFunc(<%= post_id %>)" onblur="onblurFunc(<%= post_id %>)"
+						style="color:#C8C8C8;" >来句评论吧
+						</textarea>
+						<script type="text/javascript">
+						document.getElementById(<%= "textRe" +  post_id %>).value= "来句评论吧";
+						document.getElementById(<%= "textRe" +  post_id %>).style.color= "#C8C8C8";
+						alert(<%= "textRe" +  post_id %>);
+						</script>
+						<button id='<%= "button" + post_id %>' onClick="submitReply(<%= post_id %>)" class="commet" style="display:none;">发表评论</button>
 					</div>
-				</dir>
+				</div>
 				
 			</div>
 		<%

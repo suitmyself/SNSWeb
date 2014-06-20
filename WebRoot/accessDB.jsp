@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*"  %>
+<%@ page import="java.sql.*" %>
 <% 
 	String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	String DB_URL = "jdbc:mysql://localhost/t_sns?useUnicode=true&characterEncoding=utf8";

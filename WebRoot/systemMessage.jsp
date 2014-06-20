@@ -30,9 +30,9 @@
 	.systemMessage 
 	{
 		width: 80%;
-		height: 100%;
+		/*height: 1000px;*/
 		float: left;
-		background-color: blue;
+		background-color: #D9D9D9;
 		border-radius: 8px;
 		margin-left: 15px;
 		padding-top: 20px;
@@ -43,15 +43,16 @@
 	{
 	    border-radius:8px;
 		border: 1px solid #BDC7D8;
-		background-color:red;
+		background-color:#DA70D6;
 		/*position:absolute;*/
 		position:relative;
 		width:90%;
-		height:180px;
+		height:220px;
 		/*text-align:center;*/
 		margin:10px;
 		left:5%;   
         /*top:30%; */
+        box-shadow: 0px 2px 2px #CCC;
 	}
 	
 	.system_message
@@ -62,11 +63,12 @@
 		/*position:absolute;*/
 		position:relative;
 		width:90%;
-		height:180px;
+		height:220px;
 		/*text-align:center;*/
 		margin:10px;
 		left:5%;   
         /*top:30%; */
+        box-shadow: 0px 2px 2px #CCC;
 	}
 	
 	.acceptButton, .rejectButton,.readButton
@@ -136,7 +138,7 @@
 	
 	function rejectFunc(thisButton) 
 	{
-		alert("reject");
+		//alert("reject");
 		send_request("GET","dealFriendRequest.jsp?status=-1"
         			+"&request_id="+thisButton.id,
         			null,
@@ -146,7 +148,7 @@
 	
 	function readFunc(thisButton) 
 	{
-		alert("read");
+		//alert("read");
 		send_request("GET","readSystemMessage.jsp?status=1"
         			+"&notice_id="+thisButton.id,
         			null,
@@ -160,7 +162,7 @@
     	{       // 判断对象状态
     		if (http_request.status == 200) 
        		{    // 信息已经成功返回，开始处理信息
-       			 alert("已经返回");
+       			 //alert("已经返回");
         		 var message=http_request.responseText;
         		 var i=message.indexOf("accept");
         		 if(message.indexOf("accept")!=-1)//获得返回的内容
@@ -191,7 +193,7 @@
 <body>
     <%@ include file="navigator.jsp" %>
   	<%@ include file="module.jsp" %>
-	<%@ include file="accessDB.jsp" %>
+
   	<div class="systemMessage">
   	<% 
 	try

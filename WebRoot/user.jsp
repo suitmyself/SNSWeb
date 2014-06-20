@@ -29,32 +29,93 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style type="text/css">
 
-	button {
+	.PostButton, .commet {
 		height: 30px;
+		margin-left: 10px;
+		adding: 0px 30px;
+		display: inline-block;
+        font-size: 14px;
+        line-height: 28px;
+        color: #666;
+		text-align: center;
+		vertical-align: middle;
+		cursor: pointer;
+		background: linear-gradient(to bottom, #FEFEFE 0px, #F8F8F8 100%) repeat scroll 0% 0% #FBFBFB;
+		border: 1px solid #A7ACB5;
+		border-radius: 3px;
+		box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
+		/*position: relative;*/
+		/*bottom: 10px;*/
+		float: right;
+		margin-right: 29px;
+		
+	}
+	.commet
+	{
+		margin-right: 48px;
+	}
+	
+	.postPaid
+	{
+		width:50%;
+		height:180px;
+		margin-left: auto;
+		margin-right: auto;
+		
+		display: block;
+		margin-bottom: 20px;
+		margin-top: 25px;
+		/*width: 500px;*/
+		background-color: #FFF;
+		border: 1px solid  	#E1DFDF ;
+		border-radius: 2px;
+		box-shadow: 2px 4px 4px #CCC;
+		word-break: break-all;
+		font: 12px/18px arial,STHeiti,"Microsoft YaHei",宋体;
+		color: #333;
 	}
 
 	#myPost {
-		width: 60%;
+		width: 90%;
+		height:100px;
 		margin-left: 30px;
-		padding-top: 20px;
-		padding-bottom: 20px;
+		margin-top: 20px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		margin-bottom:15px;
+		border: 1px solid #E1E1E1;
 	}
 
 	.postBoard {
 		width: 80%;
 		height: 100%;
 		float: left;
-		background-color: white;
+		background-color: #D9D9D9;
 		border-radius: 8px;
 		margin-left: 15px;
 		padding-top: 20px;
 		padding-bottom: 20px;
 	}
 
-	.postItem {
+	.postItem 
+	{
+		margin-left: auto;
+		margin-right: auto;
+		
+		display: block;
+		margin-bottom: 20px;
+		/*width: 500px;*/
+		background-color: #FFF;
+		border: 1px solid #E1DFDF;
+		border-radius: 2px;
+		box-shadow: 0px 2px 2px #CCC;
+		word-break: break-all;
+		font: 12px/18px arial,STHeiti,"Microsoft YaHei",宋体;
+		color: #333;
+	
+	
 		width: 90%;
 		float: left;
-		background-color: silver;
 		border-radius: 5px;
 		margin-left: 20px;
 		padding-top: 10px;
@@ -64,37 +125,68 @@
 	.originalText {
 		width: 90%;
 		float: left;
-		background-color: silver;
+		background-color: #FFF;
 		border-radius: 5px;
 		margin-left: 20px;
 		padding-top: 10px;
-		padding-bottom: 20px;
+		padding-bottom: 0px;
+	}
+	.content
+	{
+		background-color:FFCCCC;
+		width:100%;
+		min-height:80px;
+		padding-left:10px;
+		padding-top:10px;
+		border-radius: 2px;
+		margin-bottom: 5px;
 	}
 
 	.replies {
-		width: 90%;
+		width: 89%;
 		float: left;
 		background-color: silver;
 		border-radius: 5px;
-		margin-left: 50px;
-		padding-top: 10px;
-		padding-bottom: 10px;
+		margin-left: 40px;
+		margin-top: 2px;
+		padding-top: 5px;
+		padding-bottom: 5px;
 	}
 
 	.replyText
 	{
-		padding-top: 10px;
-		padding-bottom 10px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 10px;
+	}
+	
+	.to_ReplayText
+	{
+		width: 90%;
+		height: 30px;
+		margin-left: 30px;
+		margin-top: 0px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		margin-bottom:5px;
+		border: 1px solid green;
+		
+	}
+	
+	.inputReply
+	{
+		margin-top:10px;
 	}
 
 	.toReply {
-		width: 90%;
+		width: 91.5%;
 		float: left;
-		background-color: silver;
+		background-color: #E6E6FA;
 		border-radius: 5px;
 		margin-left: 20px;
-		padding-top: 10px;
-		padding-bottom: 20px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		margin-top:5px;
 	}
 
 	</style>
@@ -147,6 +239,7 @@
 					strInput = encodeURI(strInput);
 					xmlhttp.open("POST", strInput, true);
 					xmlhttp.send();
+					document.getElementById("myPost").value="";
 				}
 			} else {
 				alert("请输入内容！");
@@ -160,6 +253,67 @@
 			else {
 				document.getElementById("IR_" + postID).style.display = "none";
 			}
+		}
+		
+		function onfocusFunc(postID)
+		{
+			document.getElementById("button" + postID).style.display="inline";
+			document.getElementById("textRe" + postID).style.height= "60px";
+			if(document.getElementById("textRe" + postID).value.substring(0,5)=="来句评论吧")
+			{
+				document.getElementById("textRe" + postID).value= "";
+			}
+			document.getElementById("textRe" + postID).style.color="black";
+			//document.getElementById("textRe" + postID).value="";
+			//document.getElementById("textRe" + postID).blur();
+			//document.getElementById("textRe" + postID).focus();
+			//document.getElementById("textRe" + postID).style.textIndent="0px";
+			//var obj = event.srcElement;    
+			//var txt =obj.createTextRange();    
+			//txt.moveStart('character',obj.value.length);    
+			//txt.collapse(true);    
+			//txt.select();  
+			
+		}
+		
+		function onblurFunc(postID)
+		{
+			if(document.getElementById("textRe" + postID).value=="")
+			{
+				document.getElementById("textRe" + postID).style.height= "30px";
+				document.getElementById("button" + postID).style.display="none";
+				//alert("|"+document.getElementById("textRe" + postID).value+"|");
+
+	
+				document.getElementById("textRe" + postID).value= "来句评论吧";
+		
+				document.getElementById("textRe" + postID).style.color= "#C8C8C8";
+			}
+		}
+		
+		function postOnblur(text_)
+		{
+			var message = text_.value;
+			if(text_.value=="")
+			{
+				text_.value= "闲来无事闷得慌，来一发状态吧";
+			
+				text_.style.color= "#C8C8C8";
+				text_.style.borderColor="#E1E1E1";
+			}
+		}
+		
+		function postOnfocus(text_)
+		{
+			//alert("|"+text_.innerHTML.substring(0,13)+"|");
+			var message=text_.value.substring(0,14);
+			//alert(message);
+			if(text_.value.substring(0,14)=="闲来无事闷得慌，来一发状态吧")
+			{
+				text_.value= "";
+			}
+			text_.style.color="black";
+			text_.style.borderColor="green";
 		}
 
 		function submitReply(postID) {
@@ -187,6 +341,7 @@
 					strInput = encodeURI(strInput);
 					xmlhttp.open("POST", strInput, true);
 					xmlhttp.send();
+					document.getElementById("textRe" + postID).value="";
 				}
 			} else {
 				alert("请输入内容！");
@@ -194,12 +349,13 @@
 		}
 	</script>
 </head>
-<body>
+<body style="background-color:#D9D9D9">
     <%@ include file="navigator.jsp" %>
   	<%@ include file="module.jsp" %>
-	<div>
-		<textarea type="text" id="myPost"></textarea>
-		<button onclick="submitPost()">发布</button>
+	<div class="postPaid">
+		<textarea type="text" id="myPost" onfocus="postOnfocus(this)" onblur="postOnblur(this)" style="color:#C8C8C8">闲来无事闷得慌，来一发状态吧</textarea>
+		<br/>
+		<button onclick="submitPost()" class="postButton">发布</button>
 	</div>
 	<div class="postBoard" id="dynamics"></div>
 

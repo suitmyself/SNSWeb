@@ -31,7 +31,7 @@
 		width: 80%;
 		height: 100%;
 		float: left;
-		background-color: blue;
+		background-color: #D9D9D9;
 		border-radius: 8px;
 		margin-left: 15px;
 		padding-top: 20px;
@@ -41,7 +41,7 @@
 	{
 		padding: 7px 10px;
 		width: 300px;
-		height: 25px;
+		height: 40px;
 		line-height: 25px;
 		border-radius: 3px;
 		margin-right: 7px;
