@@ -29,7 +29,7 @@
 <% 
    try{
 		String sql;
-		sql = "SELECT * FROM account where username='"+request.getParameter("userID")+"' OR email='"+request.getParameter("email")+"'";
+		sql = "SELECT * FROM account where username='"+java.net.URLDecoder.decode(request.getParameter("userID"), "UTF-8")+"' OR email='"+java.net.URLDecoder.decode(request.getParameter("email"), "UTF-8")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 	
 		//STEP 5: Extract data from result set
@@ -42,9 +42,9 @@
 		}
 		else
 		{
-			String username=request.getParameter("userID");
-			String password=request.getParameter("password");
-			String email=request.getParameter("email");
+			String username=java.net.URLDecoder.decode(request.getParameter("userID"), "UTF-8");
+			String password=java.net.URLDecoder.decode(request.getParameter("password"), "UTF-8");
+			String email=java.net.URLDecoder.decode(request.getParameter("email"), "UTF-8");
 			sql="insert into account values ('"+username+"','"+password+"','"+"Un Know"+"','"+email+"')";
 			System.out.println(sql);
 			Statement stmt2 = conn.createStatement();
@@ -53,6 +53,11 @@
 											 "null,"+"null,"+"null,"+"null,"+"null,"+
 											 "null,"+"null,"+"null"+")";
 			Statement stmt3 = conn.createStatement();
+			stmt3.executeUpdate(sql);
+			
+			sql="insert into system_message(status,content,to_username) values(0,'"+username
+				+",welcome to our SNS webSite, the webSite is designed by WeiChen and HanDong, enjoy it and good luck!','"
+				+username+"')";
 			stmt3.executeUpdate(sql);
 
 			out.println("<h2>检测到用户名未被注册</h2>");
@@ -107,8 +112,8 @@
 <hr/>
 <h2>用户注册信息</h2>
 <table>
-	<tr> <td>name</td>     <td><%= request.getParameter("userID")%>   </td></tr>
-	<tr> <td>email</td>    <td><%= request.getParameter("email")%>	  </td></tr>
+	<tr> <td>name</td>     <td><%= java.net.URLDecoder.decode(request.getParameter("userID"), "UTF-8")%>   </td></tr>
+	<tr> <td>email</td>    <td><%= java.net.URLDecoder.decode(request.getParameter("email"), "UTF-8")%>	  </td></tr>
 </table>
 </center>
 </body>

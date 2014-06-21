@@ -134,6 +134,7 @@
 	.content
 	{
 		background-color:FFCCCC;
+		font-size:14px;
 		width:100%;
 		min-height:80px;
 		padding-left:10px;

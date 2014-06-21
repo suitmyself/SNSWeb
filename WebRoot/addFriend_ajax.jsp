@@ -8,17 +8,11 @@
 <% 
 	try
 	{
-		String username1=new String(request.getParameter("fromUsername"));
-		String username2=new String(request.getParameter("toUsername"));
-		/*
-		if(username1.compareTo(username2)>0)
-		{
-			String temp=username1;
-			username1=username2;
-			username2=temp;
-		}
-		*/
-		String sql = "SELECT * FROM friend_pair where username1='"+username1+"' AND username2='"+username2+"'";
+		String username1 = java.net.URLDecoder.decode(request.getParameter("fromUsername"), "UTF-8");
+		String username2 = java.net.URLDecoder.decode(request.getParameter("toUsername"), "UTF-8");
+		String message = java.net.URLDecoder.decode(request.getParameter("message"), "UTF-8");
+
+		String sql = "SELECT * FROM friend_pair WHERE username1='"+username1+"' AND username2='"+username2+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 	
 		//STEP 5: Extract data from result set
@@ -28,13 +22,10 @@
 		}
 		else
 		{
-			sql = "INSERT INTO add_friend_request(from_username,to_username,message) Values('"
-				+request.getParameter("fromUsername")+"','"
-				+request.getParameter("toUsername")+"','"
-				+request.getParameter("message")+"')";
+		sql = "INSERT INTO add_friend_request(from_username, to_username, message) VALUES('"
+				+ username1 + "','" + username2 + "','" + message + "')";
 			stmt.executeUpdate(sql);
 			out.print("success");
-			String message = request.getParameter("message");
 			out.print(message);
 		}
 

@@ -83,11 +83,11 @@
        		 }
 		}
 
-        send_request("GET","queryFriend.jsp?queryType="+chkObjs[i].value
-        			+"&queryText="+document.getElementById("queryText_").value,
-        			null,
-        			"text",
-        			showFeedbackInfo);
+		var url = "queryFriend.jsp?queryType=" + chkObjs[i].value
+					+ "&queryText=" + document.getElementById("queryText_").value
+		url = encodeURI(url);
+		url = encodeURI(url);
+        send_request("GET", url, null, "text", showFeedbackInfo);
         //alert("docheck");
 	}
 
@@ -115,12 +115,14 @@
 		var message=prompt("请输入验证信息");
 		if(message != null)
 		{
-       		send_request("post","addFriend_ajax.jsp",
-       					"fromUsername="+"<%= session.getAttribute("userID")%>"
+			var url = "addFriend_ajax.jsp?"
+						+"fromUsername="+"<%= session.getAttribute("userID")%>"
         				+"&toUsername="+thisButton.id
-        				+"&message="+message,
-        				"text",
-        				showFeedbackInfo2);
+        				+"&message="+message;
+			url = encodeURI(url);
+			url = encodeURI(url);
+			//alert("http://localhost:8080/sns/" + url);
+       		send_request("GET", url, null, "text", showFeedbackInfo2);
         }
         
 	}

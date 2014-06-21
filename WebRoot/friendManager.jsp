@@ -91,11 +91,12 @@
 	function deleteFriend(thisButton) 
 	{
 		//alert("delete");
-		send_request("GET","deleteFriend.jsp?username1="+"<%= session.getAttribute("userID")%>"
-        			+"&username2="+thisButton.id,
-        			null,
-        			"text",
-        			showFeedbackInfo);
+		var url = "deleteFriend.jsp?username1="+"<%= session.getAttribute("userID")%>"
+			+"&username2="+thisButton.id;
+		url = encodeURI(url);
+		url = encodeURI(url);
+		//alert(url);
+		send_request("GET", url, null, "text", showFeedbackInfo);
 	}
 
 	function showFeedbackInfo() 
@@ -169,7 +170,7 @@
 	        	out.println("<td>"+rs.getString("major")+"</td> ");
 	        	out.println("<td>");
 	       	    %>
-	        	<input type="button" value="删除好友" id="<%= rs.getString("username")%> "class="deleteButton" onclick="deleteFriend(this)">
+	        	<input type="button" value="删除好友" id="<%= rs.getString("username")%>" class="deleteButton" onclick="deleteFriend(this)">
 	        	<% 
 	        	out.println("</td>");
 	        	out.println("</tr>");

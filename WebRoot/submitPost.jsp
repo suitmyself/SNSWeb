@@ -5,8 +5,10 @@
 response.setCharacterEncoding("UTF-8");
 request.setCharacterEncoding("UTF-8");
 
-if (request.getParameter("words") != null) {
-	String content = java.net.URLDecoder.decode(request.getParameter("words"), "UTF-8");
+String words = java.net.URLDecoder.decode(request.getParameter("words"), "UTF-8");
+
+if (words != null) {
+	String content = java.net.URLDecoder.decode(words, "UTF-8");
 	String userID = (String) session.getAttribute("userID");
 %>
 

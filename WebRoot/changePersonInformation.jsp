@@ -25,7 +25,7 @@ function timeCount()
 <% 
 	try
 	{
-		String sql = "SELECT * FROM account where username='"+session.getAttribute("userID")+"'";
+		String sql = "SELECT * FROM account WHERE username='"+session.getAttribute("userID")+"'";
 		ResultSet rs = stmt.executeQuery(sql);
 		//STEP 5: Extract data from result set
 		if(rs.next()) 
@@ -34,26 +34,36 @@ function timeCount()
 			out.println("<h2>验证正确</h2>");
 			
 			
-			String realname = request.getParameter("realname");
+			String realname = request.getParameter("name");
 			String      sex = request.getParameter("gender");
 			String     year = request.getParameter("year");
 			String    mouth = request.getParameter("mouth");
 			String      day = request.getParameter("day");
-			String signature= request.getParameter("signature");
+
 			System.out.println("year3:" +year);
 			System.out.println("mouth3:" +mouth);
 			System.out.println("day3:" +day);
 			System.out.println("执行一遍");
+
+			String university = request.getParameter("university");
+			String school = request.getParameter("school");
+			String major = request.getParameter("major");
+			String signature = request.getParameter("signature");
+			
+
  			sql = "UPDATE user_info SET realname='"+realname+"',"+
  			                                "sex= "+Short.parseShort(sex)+","+
  			                           "birthday='"+year+"-"+mouth+"-"+day+"',"+
- 			                          "signature='"+signature+"'"+
+ 			                          "signature='"+signature+"',"+
+ 			                          "university='"+university+"',"+
+ 			                          "school='"+school+"',"+
+ 			                          "major='"+major+"'"+
  			      "Where username='"+session.getAttribute("userID")+"'";
 			stmt.executeUpdate(sql);
 			
 			out.println("<h2>信息正常更改</h2>");
 			out.println("<p><span id='timing'>3</span>秒后返回<a href='user.jsp' >用户</a>页面！</p>");
-		    String content=300+";URL="+"user.jsp";
+		    String content=3+";URL="+"user.jsp";
 		    response.setHeader("REFRESH",content);
 		}
 		else

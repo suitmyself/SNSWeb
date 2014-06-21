@@ -133,18 +133,18 @@
 		var addFriend=confirm("是否同时加对方为好友？");
 		if(addFriend==true)
 		{
-			send_request("GET","dealFriendRequest.jsp?status=1"
+			send_request("GET",encodeURI(encodeURI("dealFriendRequest.jsp?status=1"
         				+"&request_id="+thisButton.id
-        				+"&addFriend=1",
+        				+"&addFriend=1")),
         				null,
         				"text",
         				showFeedbackInfo);
         }
         else
         {
-        	send_request("GET","dealFriendRequest.jsp?status=1"
+        	send_request("GET",encodeURI(encodeURI("dealFriendRequest.jsp?status=1"
         				+"&request_id="+thisButton.id
-        				+"&addFriend=0",
+        				+"&addFriend=0")),
         				null,
         				"text",
         				showFeedbackInfo);
@@ -154,8 +154,8 @@
 	function rejectFunc(thisButton) 
 	{
 		//alert("reject");
-		send_request("GET","dealFriendRequest.jsp?status=-1"
-        			+"&request_id="+thisButton.id,
+		send_request("GET",encodeURI(encodeURI("dealFriendRequest.jsp?status=-1"
+        			+"&request_id="+thisButton.idi)),
         			null,
         			"text",
         			showFeedbackInfo);
@@ -164,8 +164,8 @@
 	function readFunc(thisButton) 
 	{
 		//alert("read");
-		send_request("GET","readSystemMessage.jsp?status=1"
-        			+"&notice_id="+thisButton.id,
+		send_request("GET",encodeURI(encodeURI("readSystemMessage.jsp?status=1"
+        			+"&notice_id="+thisButton.id)),
         			null,
         			"text",
         			showFeedbackInfo);
@@ -230,8 +230,8 @@
 				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>验证信息: "+rs.getString("message")+"<hr>");
 				%>
-	       		<input type="button" value="接受" id="<%= rs.getInt("request_id")%> " onclick="acceptFunc(this)" class="acceptButton">
-	       		<input type="button" value="拒绝" id="<%= rs.getInt("request_id")%> " onclick="rejectFunc(this)" class="rejectButton">
+	       		<input type="button" value="接受" id="<%= rs.getInt("request_id")%>" onclick="acceptFunc(this)" class="acceptButton">
+	       		<input type="button" value="拒绝" id="<%= rs.getInt("request_id")%>" onclick="rejectFunc(this)" class="rejectButton">
 	       		</div>
 	        	<% 
 	        	count++;
@@ -252,7 +252,7 @@
 				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>内容: "+rs.getString("content")+"<hr>");
 				%>
-	       		<input type="button" value="设定为已读" id="<%= rs.getInt("notice_id")%> " onclick="readFunc(this)" class="readButton">
+	       		<input type="button" value="设定为已读" id="<%= rs.getInt("notice_id")%>" onclick="readFunc(this)" class="readButton">
 	       		</div>
 	        	<% 
 	        	count++;
@@ -273,7 +273,7 @@
 				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>内容: "+rs.getString("content")+"<hr>");
 				%>
-	       		<input type="button" value="已读" id="<%= rs.getInt("notice_id")%> " disabled onclick="readFunc(this)" class="disabledButton">
+	       		<input type="button" value="已读" id="<%= rs.getInt("notice_id")%>" disabled onclick="readFunc(this)" class="disabledButton">
 	       		</div>
 	        	<% 
 	        	count++;
@@ -295,7 +295,7 @@
 				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>验证信息: "+rs.getString("message")+"<hr>");
 				%>
-	       		<input type="button" value="已经接受" id="<%= rs.getInt("request_id")%> " disabled onclick="acceptFunc(this)" class="disabledButton">
+	       		<input type="button" value="已经接受" id="<%= rs.getInt("request_id")%>" disabled onclick="acceptFunc(this)" class="disabledButton">
 	       		</div>
 	        	<% 
 	        	count++;
@@ -317,7 +317,7 @@
 				out.print("<hr>时间: "+rs.getString("ts"));
 				out.print("<hr>验证信息: "+rs.getString("message")+"<hr>");
 				%>
-	       		<input type="button" value="被拒绝" id="<%= rs.getInt("request_id")%> " disabled onclick="acceptFunc(this)" class="disabledButton">
+	       		<input type="button" value="被拒绝" id="<%= rs.getInt("request_id")%>" disabled onclick="acceptFunc(this)" class="disabledButton">
 	       		</div>
 	        	<% 
 	        	count++;

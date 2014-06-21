@@ -76,55 +76,136 @@ td
 </style>
 </head>
 
-<body onload="load()" >  <!-- 这样子就可以载入了 -->
+<body>
 <%@ include file="navigator.jsp" %>
- <%@ include file="module.jsp" %>
+<%@ include file="module.jsp" %>
 
 <% 
 	try
 	{
-		String sql = "SELECT * FROM user_info where username='"+session.getAttribute("userID")+"'";
+		String sql = "SELECT * FROM account NATURAL JOIN user_info WHERE username='"+session.getAttribute("userID")+"'";
+		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
 		
-		//STEP 5: Extract data from result set
-		if(rs.next()) 
+		if (rs.next()) 
 		{
 		    String username = rs.getString("username");
+			String email = rs.getString("email");
 			String name     = rs.getString("realname");
 			int    sex      = rs.getShort("sex");
  			Date   birthday = rs.getDate("birthday");
- 			
- 			Calendar cal=Calendar.getInstance();
-            cal.setTime(birthday);
-            int day = cal.get(Calendar.DAY_OF_MONTH); //日
-			int mouth = cal.get(Calendar.MONTH) + 1; //月(从0开始, 一般加1，实际是否 Calendar 里面常量的值决定的)
-			int year = cal.get(Calendar.YEAR); //年
-			
  			String university = rs.getString("university");
   			String school = rs.getString("school");
   			String major = rs.getString("major");
 			String signature = rs.getString("signature");
-			
-			System.out.println("university: "+university);
- 			System.out.println("school: "+school);
- 			System.out.println("major:"+major);
-			
-			sql = "SELECT * FROM account where username='"+session.getAttribute("userID")+"'";
-			ResultSet rs1 = stmt.executeQuery(sql);
-			rs1.next();
-			String email = rs1.getString("email");
+
+ 			if (birthday == null) {  //To avoid NullPointerException
+ 				birthday = new Date(0);
+ 			}
+
+			//System.out.println(birthday);
+ 			
+ 			Calendar cal = Calendar.getInstance();
+            cal.setTime(birthday);
+            int day = cal.get(Calendar.DAY_OF_MONTH); //日
+			int mouth = cal.get(Calendar.MONTH) + 1; //月(从0开始, 一般加1，实际是否 Calendar 里面常量的值决定的)
+			int year = cal.get(Calendar.YEAR); //年
+
 			%>
+			
+  	<div class="personInf">
+	<h1 align="center">个人信息页面</h1>
+	<hr>
+	<br>
+	<center>
+		<form id="form" name="form" class="form" action="changePersonInformation.jsp" method="POST">
+			<table>
+				<tr>
+					<td>用户名</td>
+					<td><input id="userID_" name="userID" class="userID" value='<%= session.getAttribute("userID")%>';
+						style="vertical-align: middle" size="19" onblur="doCheck()" disabled>
+					</td>
+					<td align="center"><small>只读</small>
+					</td>
+				</tr>
+				<tr>
+					<td>真实姓名</td>
+					<td><input type="text" id="name_" name="name" class="name" value="<%= name %>">
+					</td>
+
+				</tr>
+				<tr>
+					<td>性别</td>
+					<td> <span style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+					<input type="radio" name="gender" value="1" <%= sex == 1 ? "checked" : "" %> />男
+					<span style="width:100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					<input type="radio" name="gender" value="0" <%= sex == 0 ? "checked" : "" %> /> 女</td>
+				</tr>
+				<tr>
+
+					<td>生日 </td>
+					
+					<td>
+					&nbsp;
+					年<select id="year_" name="year">
+							<% for(int i=1900;i<=2014;i++)
+                            {%>
+							<option value="<%= i%>">
+								<%=i %>
+							</option>
+							<%}%>
+					</select>
+                   &nbsp;&nbsp;
+					月<select id="mouth_" name="mouth">
+							<% for(int i=1;i<=12;i++)
+                            {%>
+							<option value="<%= i%>">
+								<%=i %>
+							</option>
+							<%}%>
+					</select>
+					
+                    &nbsp;&nbsp;
+					日<select id="day_" name="day">
+							<% for(int i=1;i<=31;i++)
+                            {%>
+							<option value="<%= i%>">
+								<%= i %>
+							</option>
+							<%}%>
+					</select>
+					
+				</tr>
+				<tr>
+					<td>学校</td>
+					<td><input type="text" id="university_" name="university" class="university" value="<%= university %>"></td>
+				</tr>
+				<tr>
+					<td>学院</td>
+					<td><input type="text" id="school_" name="school" class="school" value="<%= school %>"></td>
+				</tr>
+				<tr>
+					<td>专业</td>
+					<td><input type="text" id="major_" name="major" class="major" value="<%= major %>">
+					</td>
+					
+				</tr>
+				<tr>
+					<td>email</td>
+					<td><input type="text" id="email_" name="email" class="email" value="<%= email %>" disabled>
+					</td>
+					<td align="center"><small>只读</small>
+					</td>
+					
+				</tr>
+			</table>
+			签名<br/>
+			<textarea rows="10" cols="50" id="signature_" name="signature" class="signature"><%= signature %></textarea>
+			<input type="submit" name="submit" class="submit" value="修改">
+		</form>
+	</center>
+	</div>
 				<script type="text/javascript">
-				function load()
-				{
-					//alert("load");
-					document.getElementById("userID_").value= "<%= session.getAttribute("userID")%>";
-					document.getElementById("name_").value= "<%= name %>";
-					document.getElementById("university_").value= "<%= university %>";
-					document.getElementById("school_").value= "<%= school %>";
-					document.getElementById("major_").value= "<%= major %>";
-					document.getElementById("email_").value= "<%= email %>";
-					document.getElementById("signature_").value= "<%= signature %>";
 					
 					for(var i=0; i<document.getElementById("year_").length;i++)
 					{
@@ -155,9 +236,6 @@ td
 							break;
 						}
 					}
-					
-					//alert("运行");
-				}
 					
 				</script>
 			<% 
@@ -304,5 +382,6 @@ td
 		</form>
 	</center>
 	</div>
+
 </body>
 </html>
