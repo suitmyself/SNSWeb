@@ -11,6 +11,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>修改个人信息</title>
+<script type="text/javascript"> //倒计时
+var t;
+function timeCount()
+{
+	document.getElementById("timing").innerHTML=document.getElementById("timing").innerHTML-1;
+	t=setTimeout("timeCount()",1000);
+}
+</script>
 </head>
 <body>
 <%@ include file="accessDB.jsp" %>
@@ -32,7 +40,10 @@
 			String    mouth = request.getParameter("mouth");
 			String      day = request.getParameter("day");
 			String signature= request.getParameter("signature");
-			
+			System.out.println("year3:" +year);
+			System.out.println("mouth3:" +mouth);
+			System.out.println("day3:" +day);
+			System.out.println("执行一遍");
  			sql = "UPDATE user_info SET realname='"+realname+"',"+
  			                                "sex= "+Short.parseShort(sex)+","+
  			                           "birthday='"+year+"-"+mouth+"-"+day+"',"+
@@ -42,7 +53,7 @@
 			
 			out.println("<h2>信息正常更改</h2>");
 			out.println("<p><span id='timing'>3</span>秒后返回<a href='user.jsp' >用户</a>页面！</p>");
-		    String content=3+";URL="+"user.jsp";
+		    String content=300+";URL="+"user.jsp";
 		    response.setHeader("REFRESH",content);
 		}
 		else

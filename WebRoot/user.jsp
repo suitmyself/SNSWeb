@@ -194,7 +194,7 @@
 	<script type="text/javascript">
 		updatePostBoard();
 
-		setInterval("updatePostBoard()", 30000);
+		setInterval("updatePostBoard();updateSystemMessage();", 30000);
 
 		function updatePostBoard() {
 			var xmlhttp;

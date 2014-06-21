@@ -217,7 +217,7 @@ td
 	<hr>
 	<br>
 	<center>
-		<form id="form" name="form" class="form" action="changePersonInformation.jsp" method="POST">
+		<form action="changePersonInformation.jsp" method="POST">
 			<table>
 				<tr>
 					<td>用户名</td>

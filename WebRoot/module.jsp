@@ -58,17 +58,55 @@
   }
 
   </style>
+  <script type="text/javascript">
+  updateSystemMessage();
+
+  setInterval("updateSystemMessage()", 30000);
+  function updateSystemMessage() 
+  {
+    //alert("system message");
+    send_request("GET","updateSystemMessage.jsp",
+        		null,
+        		"text",
+        		showFeedbackInfo_sys_mes);
+        //alert("docheck");
+ }
+
+	function showFeedbackInfo_sys_mes() 
+	{
+		if (http_request.readyState == 4) 
+    	{       // 判断对象状态
+    		if (http_request.status == 200) 
+       		{   // 信息已经成功返回，开始处理信息
+       			 //alert(http_request.responseText);
+        		 if(http_request.responseText.indexOf("new")!=-1)//获得返回的内容
+        		 {
+        		 	document.getElementById("system_message_link").innerHTML=http_request.responseText;
+        		 	alert("您有新消息，请进入系统消息查看!");
+        		 }
+        		//alert(http_request.responseText);
+        	}
+        	/*
+        	else 
+        	{ //页面不正常
+          		alert("您所请求的页面有异常。");
+        	}
+        	*/
+    	}
+	}
+  </script>
+  <script type="text/javascript" src="ajax.js"></script>
   </head>
 
   <div class="functionBlock">
   	<span style="color:white">功能模块</span>
  	 <ul>
- 	 	<li> <a href="user.jsp">个人中心</a>
+ 	 	<li> <a href="user.jsp">个人中心</a> 
  	 	<li> <a href="changePassword.jsp">修改密码</a>
   	 	<li> <a href="personInformation.jsp">个人信息</a>
   	 	<li> <a href="addFriend.jsp">添加好友</a>
   	 	<li> <a href="friendManager.jsp">好友管理</a>
-  	 	<li> <a href="systemMessage.jsp">系统消息</a>
+  	 	<li> <a href="systemMessage.jsp" >系统消息<span style="color:red;" id="system_message_link"></span></a>
   	 	
   	 </ul>
   	 <hr>
