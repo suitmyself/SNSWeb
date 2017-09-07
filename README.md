@@ -1,4 +1,4 @@
 SNSWeb
 ======
 
-北京大学数据库双学位大作业
+A tiny SNS Web implementated by JSP and MySQL.
