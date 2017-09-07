@@ -1,4 +1,4 @@
 SNSWeb
 ======
 
-A tiny SNS Web implementated by JSP and MySQL.
+A tiny SNS website implementated by JSP and MySQL.
